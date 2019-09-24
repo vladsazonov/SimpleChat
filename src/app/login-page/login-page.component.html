@@ -10,17 +10,18 @@
       <div class="paperContent">
         <h1 class="mat-display-1">Войти</h1>
         <div class="loginInputs">
-          <form>
-            <mat-form-field class="fullWidth"  appearance="outline">
+          <form (submit)="handleLogin(login.value, password.value)">
+            <mat-form-field class="fullWidth" appearance="outline">
               <mat-label>Логин</mat-label>
-              <input matInput placeholder="Логин">
+              <input #login matInput placeholder="Логин">
               <mat-icon class="inputIcon" matSuffix>person</mat-icon>
             </mat-form-field>
             <mat-form-field class="fullWidth"   appearance="outline">
               <mat-label>Пароль</mat-label>
-              <input type="password" matInput placeholder="Пароль">
+              <input type="password" #password matInput placeholder="Пароль">
               <mat-icon class="inputIcon" matSuffix>lock</mat-icon>
             </mat-form-field>
+            <button type="submit" mat-raised-button class="signInButton">войти</button>
           </form>
 
         </div>

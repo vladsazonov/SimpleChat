@@ -42,7 +42,7 @@
   bottom: 0;
 }
 .header {
-  background-color: #005662;
+  background-color: #026876;
   border-radius: 10px 10px 0 0 ;
   position: absolute;
   top: 0;
@@ -63,11 +63,17 @@
   margin: 0;
 }
 .loginInputs {
-  margin-top: 64px;
+  margin-top: 40px;
 }
 .inputIcon {
   color: #9e9e9e;
 }
 .fullWidth {
   width: 100%;
+}
+.signInButton {
+  width: 100%;
+  margin-top: 50px;
+  background-color: #005662;
+  color: #fff;
 }
