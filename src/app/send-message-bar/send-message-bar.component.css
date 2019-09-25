@@ -1,0 +1,50 @@
+.messageBarRoot {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 80px;
+  background-color: #f4f4f4;
+  display: flex;
+  align-items: center;
+}
+.input {
+  resize: none;
+  overflow: auto;
+  background-color: rgba(255, 255, 255, 0);
+  border: 0;
+  padding: 10px 0 10px 20px;
+  border-radius: 10px;
+  outline: none;
+  font-size: 1.3rem;
+  width: 100%;
+}
+.input::placeholder {
+  color: #8d8d8d;
+  font-family: Roboto,"Helvetica Neue",sans-serif;
+  margin-top: 10px;
+}
+
+:-ms-input-placeholder {
+  color: #8d8d8d;
+}
+
+::-ms-input-placeholder {
+  color: #8d8d8d;
+}
+.sendButton {
+  cursor: pointer;
+  color: #026876;
+  padding: 10px;
+  margin-left: auto;
+  align-self: center;
+  font-size: 30px;
+  width: 30px;
+  height: 30px;
+}
+.sendButton:hover {
+  background-color: rgba(2, 104, 118, 0.09);
+  border-radius: 50%;
+  transition-duration: .2s;
+}
+

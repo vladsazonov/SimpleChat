@@ -6,10 +6,11 @@ import {Subscription} from 'rxjs';
 })
 export class AuthorizationService {
   authStatus = 'unAuthed';
+  currentUser = localStorage.getItem('login');
   users = [
-    { id: 0, login: 'vlad', password: 'vlad'},
-    { id: 1, login: 'masha', password: 'vlad'},
-    { id: 1, login: 'lol', password: 'lol'},
+    {id: 0, login: 'vlad', password: 'vlad'},
+    {id: 1, login: 'masha', password: 'masha'},
+    {id: 1, login: 'lol', password: 'lol'},
   ];
 
   pushAuthData = (login: string, password: string) => {
@@ -18,20 +19,18 @@ export class AuthorizationService {
       if (login === user.login && password === user.password) {
         localStorage.setItem('login', login);
         localStorage.setItem('password', password);
-        this.authStatus = 'authed';
         localStorage.setItem('authStatus', 'authed');
       } else {
-        console.log('хуйня');
-        localStorage.setItem('authStatus', 'unAuthed');
+        console.log('Something went wrong');
       }
     }
-  }
+  };
 
   unAuth = () => {
     localStorage.removeItem('login');
     localStorage.removeItem('password');
     localStorage.setItem('authStatus', 'unAuthed');
-  }
+  };
 
   constructor() {
   }

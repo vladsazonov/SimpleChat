@@ -1,0 +1,5 @@
+<div class="messageBarRoot">
+  <textarea #text class="input" placeholder="Введите сообщение..."></textarea>
+  <!--<mat-icon type="button" class="sendButton" matSuffix (click)="handleSendMessage('aaa', 'aaaaaaa', date)">send</mat-icon>-->
+  <button mat-button (click)="handleSendMessage(sender, text.value, today)">send</button>
+</div>

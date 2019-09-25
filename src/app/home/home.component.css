@@ -1,0 +1,33 @@
+.root {
+  margin: 0;
+  padding: 0;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  background-color: #fafafa;
+}
+.backElement {
+  height: 311px;
+  background-color: #005662;
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  z-index: -1;
+}
+.homeContent {
+  position: absolute;
+  top: 311px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+.chatModal {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  border-radius: 10px;
+}

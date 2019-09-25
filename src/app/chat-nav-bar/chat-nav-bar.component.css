@@ -1,0 +1,15 @@
+.navBar {
+  position: sticky;
+  display: flex;
+  align-items: center;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 60px;
+  background-color: #026876;
+}
+.logOut {
+  margin: 0 110px 0 auto;
+  background-color: #0498ac;
+  color: #fff;
+}
