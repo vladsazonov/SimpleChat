@@ -1,5 +1,6 @@
 import {EventEmitter, Injectable} from '@angular/core';
 import {Subscription} from 'rxjs';
+import {Router} from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -13,13 +14,19 @@ export class AuthorizationService {
     {id: 1, login: 'lol', password: 'lol'},
   ];
 
-  pushAuthData = (login: string, password: string) => {
+  constructor(
+    private router: Router,
+  ) {
+  }
+
+  pushAuthData = (login, password) => {
     console.log(login + ' ' + password);
     for (const user of this.users) {
       if (login === user.login && password === user.password) {
         localStorage.setItem('login', login);
         localStorage.setItem('password', password);
         localStorage.setItem('authStatus', 'authed');
+        this.router.navigateByUrl('/home');
       } else {
         console.log('Something went wrong');
       }
@@ -30,8 +37,6 @@ export class AuthorizationService {
     localStorage.removeItem('login');
     localStorage.removeItem('password');
     localStorage.setItem('authStatus', 'unAuthed');
+    this.router.navigateByUrl('/login');
   };
-
-  constructor() {
-  }
 }

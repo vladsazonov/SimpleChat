@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {AuthorizationService} from '../service/authorization.service';
 import {Router} from '@angular/router';
+import { FormGroup, FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-login-page',
@@ -8,6 +9,13 @@ import {Router} from '@angular/router';
   styleUrls: ['./login-page.component.css']
 })
 export class LoginPageComponent implements OnInit {
+  loginForm = new FormGroup({
+    login: new FormControl(''),
+    password: new FormControl(''),
+  });
+
+  log: string;
+  pass: string;
 
   constructor(
     private router: Router,
@@ -18,11 +26,19 @@ export class LoginPageComponent implements OnInit {
     }
   }
 
-  handleLogin = (login, password) => {
+
+
+  /*handleLogin = (login, password) => {
     this.authorizationService.pushAuthData(login, password);
+  };*/
+  handleLogin = (loginData: any) => {
+    this.authorizationService.pushAuthData(loginData.login, loginData.password);
   };
 
   ngOnInit() {
+    if (localStorage.getItem('authStatus') === 'authed') {
+      this.router.navigate(['/home']);
+    }
   }
 
 }

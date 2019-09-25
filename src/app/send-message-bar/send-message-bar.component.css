@@ -35,16 +35,37 @@
 .sendButton {
   cursor: pointer;
   color: #026876;
-  padding: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   margin-left: auto;
   align-self: center;
-  font-size: 30px;
-  width: 30px;
-  height: 30px;
+  background-color: rgba(255, 255, 255, 0);
+  border: 0;
+  width: 50px;
+  height: 50px;
+  padding: 0;
+
 }
 .sendButton:hover {
   background-color: rgba(2, 104, 118, 0.09);
   border-radius: 50%;
   transition-duration: .2s;
+}
+.sendButton:disabled {
+  background-color: rgba(255, 255, 255, 0);
+  cursor: not-allowed;
+}
+.fixButton {
+  padding: 0;
+}
+.sendMessageForm {
+  display: flex;
+  width: 100%;
+}
+.sendIcon {
+  font-size: 30px;
+  width: 30px;
+  height: 30px;
 }
 

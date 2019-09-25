@@ -16,10 +16,12 @@ export class HomeComponent implements OnInit {
 
   handleUnAuth = () => {
     this.authorizationService.unAuth();
-    this.router.navigateByUrl('/login');
   }
 
   ngOnInit() {
+    if (localStorage.getItem('authStatus') === 'unAuthed') {
+      this.router.navigate(['/login']);
+    }
   }
 
 }

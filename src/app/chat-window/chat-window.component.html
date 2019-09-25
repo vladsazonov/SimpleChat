@@ -2,7 +2,9 @@
   <div class="header">
   </div>
   <div class="chatContent">
-    <app-message></app-message>
-    <app-send-message-bar></app-send-message-bar>
+    <div class="content" id="msgContainer">
+      <app-message  *ngFor="let item of items" [sender]="item.sender" [message]="item.message" [date]="item.date"></app-message>
+    </div>
   </div>
+  <app-send-message-bar></app-send-message-bar>
 </div>

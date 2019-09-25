@@ -12,6 +12,7 @@ import { ChatNavBarComponent } from './chat-nav-bar/chat-nav-bar.component';
 import { ChatWindowComponent } from './chat-window/chat-window.component';
 import { MessageComponent } from './message/message.component';
 import { SendMessageBarComponent } from './send-message-bar/send-message-bar.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import { SendMessageBarComponent } from './send-message-bar/send-message-bar.com
     MaterialModule,
     BrowserAnimationsModule,
     AppRoutingModule,
+    ReactiveFormsModule,
   ],
   providers: [AuthorizationService, MessagesService],
   bootstrap: [AppComponent]

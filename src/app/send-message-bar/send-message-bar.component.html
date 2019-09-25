@@ -1,5 +1,13 @@
 <div class="messageBarRoot">
-  <textarea #text class="input" placeholder="Введите сообщение..."></textarea>
+  <form class="sendMessageForm" [formGroup]="sendMessageForm" (keyup.enter)="clearInput()" >
+    <label>
+      <input value="{{send}}"  (keyup)="inputState(sendMessageForm.value)" formControlName="sendMessageInput" class="input" placeholder="Введите сообщение...">
+    </label>
+    <button class="sendButton" [disabled]="send.length === 0" (click)="handleSendMessage(sender, sendMessageForm.value, today)">
+      <mat-icon class="sendIcon" matSuffix>send</mat-icon>
+    </button>
+  </form>
+
   <!--<mat-icon type="button" class="sendButton" matSuffix (click)="handleSendMessage('aaa', 'aaaaaaa', date)">send</mat-icon>-->
-  <button mat-button (click)="handleSendMessage(sender, text.value, today)">send</button>
+
 </div>
