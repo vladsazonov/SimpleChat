@@ -8,8 +8,10 @@ import {Router} from '@angular/router';
   styleUrls: ['./chat-nav-bar.component.css']
 })
 export class ChatNavBarComponent implements OnInit {
+  user = this.authorizationService.currentUser;
+  avatarSymbol = this.user[0].toUpperCase();
 
-  constructor(
+    constructor(
     private authorizationService: AuthorizationService,
     private router: Router,
   ) {

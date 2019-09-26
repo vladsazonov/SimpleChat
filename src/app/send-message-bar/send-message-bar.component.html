@@ -1,9 +1,7 @@
 <div class="messageBarRoot">
   <form class="sendMessageForm" [formGroup]="sendMessageForm" (keyup.enter)="clearInput()" >
-    <label>
       <input value="{{send}}"  (keyup)="inputState(sendMessageForm.value)" formControlName="sendMessageInput" class="input" placeholder="Введите сообщение...">
-    </label>
-    <button class="sendButton" [disabled]="send.length === 0" (click)="handleSendMessage(sender, sendMessageForm.value, today)">
+    <button class="sendButton" [disabled]="send.length === 0" (click)="handleSendMessage(sender, sendMessageForm.value, today, currUserId)">
       <mat-icon class="sendIcon" matSuffix>send</mat-icon>
     </button>
   </form>

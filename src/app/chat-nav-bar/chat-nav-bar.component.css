@@ -1,15 +1,68 @@
+@media (min-width: 1200px) {
+  .navArea {
+    width: 1100px;
+  }
+}
+
+@media (min-width: 992px) and (max-width: 1199px) {
+  .navArea {
+    width: 900px;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  .navArea {
+    width: 700px;
+  }
+}
+
+@media (max-width: 767px) {
+  .navArea {
+    width: 500px;
+  }
+}
+
+@media (max-width: 480px) {
+  .navArea {
+    width: 95%;
+  }
+}
 .navBar {
   position: sticky;
-  display: flex;
-  align-items: center;
   top: 0;
   left: 0;
   right: 0;
   height: 60px;
   background-color: #026876;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .logOut {
   margin: 0 110px 0 auto;
   background-color: #0498ac;
   color: #fff;
+}
+.navArea {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.userAvatar {
+  background-color: #004e59;
+  margin: 10px 10px 10px auto;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+.mat-h2.mat-h2 {
+  margin: 0;
+  color: white;
+}
+.mat-menu-content {
+  padding: 0;
 }

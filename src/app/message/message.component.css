@@ -1,17 +1,17 @@
 .messageRoot {
   display: flex;
-  padding: 20px;
+  padding: 20px 0;
   align-items: center;
 }
 .avatar {
-  border-radius: 10px;
+  border-radius: 50%;
   width: 50px;
   height: 50px;
-  background-color: #4a148c;
+  background-color: #0191a5;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-right: 20px;
+  margin-right: 35px;
 }
 .avatarIco {
   color: white;
@@ -21,6 +21,10 @@
   font: 500 18px/28px Roboto,"Helvetica Neue",sans-serif;
   color: #444444;
 }
+.date {
+  margin: 0 0 0 auto;
+  color: #005662;
+}
 .message {
   margin: 0;
   color: #7e7e7e;
@@ -29,4 +33,20 @@
 }
 .messageContainer {
   max-width: 600px;
+}
+.closeIco {
+  color: #7e7e7e;
+}
+.deleteButton {
+  cursor: pointer;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.deleteButton:hover {
+  background-color: rgba(2, 104, 118, 0.15);
+  transition-duration: 0.2s;
+  border-radius: 50%;;
 }

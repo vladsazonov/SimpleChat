@@ -6,4 +6,11 @@
     <h1 class="mat-h3 author">{{sender}}</h1>
     <h2 class="mat-h4 message">{{message}}</h2>
   </div>
+  <div style="margin-left: auto;">
+    <h1 class="mat-caption date">{{date}}</h1>
+    <div type="button" class="deleteButton" (click)="handleDeleteMessage(messId, currUserId)">
+      <mat-icon class="closeIco" matSuffix>close</mat-icon>
+    </div>
+  </div>
 </div>
+<mat-divider style="margin: 0 0 0 104px"></mat-divider>

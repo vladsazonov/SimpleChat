@@ -10,18 +10,22 @@ import {FormControl, FormGroup} from '@angular/forms';
 })
 
 export class SendMessageBarComponent implements OnInit {
-  sendMessageForm = new FormGroup({
-    sendMessageInput: new FormControl(''),
-  });
-  today = new Date().toISOString().slice(0, 10);
-  sender = this.authorizationService.currentUser;
-  send = '';
 
   constructor(
     private messagesService: MessagesService,
     private authorizationService: AuthorizationService,
   ) {
   }
+
+  sendMessageForm = new FormGroup({
+    sendMessageInput: new FormControl(''),
+  });
+  date = new Date();
+  today = this.date.getHours() + ':' + this.date.getMinutes();
+  sender = this.authorizationService.currentUser;
+  currUserId = this.authorizationService.userId;
+  send = '';
+  id: string;
 
   inputState = (data) => {
     this.send = data.sendMessageInput;
@@ -31,9 +35,11 @@ export class SendMessageBarComponent implements OnInit {
     this.send = '';
   };
 
-  handleSendMessage = (sender: string, text: any, date: string) => {
+  handleSendMessage = (sender, text, date, fromUser) => {
     if (text.sendMessageInput.length > 0 && text.sendMessageInput !== ' ') {
-      this.messagesService.sendMessage(sender, text.sendMessageInput, date);
+      this.id = Date.now() + Math.random().toString(36).substr(2, 9);
+      console.log(typeof (this.id));
+      this.messagesService.sendMessage(this.id, sender, text.sendMessageInput, date, fromUser);
       this.clearInput();
     } else {
       alert('empty message');

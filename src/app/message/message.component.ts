@@ -13,9 +13,16 @@ export class MessageComponent implements AfterViewInit {
     private messagesService: MessagesService,
   ) { }
 
-  @Input() sender: string;
+  @Input() sender: any;
   @Input() message: string;
   @Input() date: string;
+  @Input() messId: string;
+  @Input() deleteMessage: string;
+  @Input() currUserId: number;
+
+  handleDeleteMessage = (messId, currUserId) => {
+    this.messagesService.deleteMessage(messId, currUserId);
+  }
 
   /*ngOnInit() {
   }*/

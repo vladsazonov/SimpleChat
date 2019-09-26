@@ -1,10 +1,15 @@
-<div class="paper">
-  <div class="header">
+<div class="header">
+  <div style="display: flex; align-items: center">
+    <h1 class="mat-h1">{{user}}</h1>
+    <h1 class="mat-caption online">Online</h1>
+    <div class="onlineIcon"></div>
   </div>
-  <div class="chatContent">
-    <div class="content" id="msgContainer">
-      <app-message  *ngFor="let item of items" [sender]="item.sender" [message]="item.message" [date]="item.date"></app-message>
-    </div>
-  </div>
-  <app-send-message-bar></app-send-message-bar>
+
 </div>
+<div class="chatContent">
+  <div class="content" id="msgContainer">
+    <app-message *ngFor="let item of items" [currUserId]="userId" [messId]="item.messId" [sender]="item.sender" [message]="item.message"
+                 [date]="item.date"></app-message>
+  </div>
+</div>
+<app-send-message-bar></app-send-message-bar>

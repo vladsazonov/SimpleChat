@@ -1,14 +1,3 @@
-.paper {
-  box-shadow: 0 0 22px 0 rgba(0, 0, 0, 0.17);
-  position: absolute;
-  top: -200px;
-  left: 110px;
-  right: 110px;
-  height: 700px;
-  width: auto;
-  border-radius: 10px;
-  background-color: #FFF;
-}
 .header {
   background-color: #e9e9e9;
   position: absolute;
@@ -17,7 +6,29 @@
   right: 0;
   height: 70px;
   border-radius: 10px 10px 0 0;
+  display: flex;
+  align-items: center;
+  padding: 0 70px;
 }
+
+.mat-h1.mat-h1 {
+  margin: 0;
+  color: #636363;
+}
+
+.online {
+  margin: 0 0 0 20px;
+  color: #4d6a84;
+}
+
+.onlineIcon {
+  background-color: #48fa35;
+  width: 10px;
+  height: 10px;
+  margin-left: 10px;
+  border-radius: 50%;
+}
+
 .chatContent {
   background-color: #fff;
   overflow: hidden;
@@ -28,7 +39,9 @@
   bottom: 79px;
   border-radius: 0 0 10px 10px;
 }
+
 .content {
+  padding: 0 70px;
   height: 100%;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
