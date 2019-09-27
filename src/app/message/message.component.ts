@@ -35,6 +35,7 @@ export class MessageComponent implements AfterViewInit, OnInit {
     this.messagesService.deleteMessage(messId, currUserId);
   };
 
+
   handleEditMessage = (messId, currUserId, message, fromUserId) => {
     if (currUserId === fromUserId) {
       this.check = this.messagesService.stat
