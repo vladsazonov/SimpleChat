@@ -1,28 +1,40 @@
-import { Component } from '@angular/core';
-import {AppModule} from './app.module';
-import { Router } from '@angular/router';
-import { AuthorizationService } from './service/authorization.service';
+import {Component, OnInit} from '@angular/core';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
+
+export class AppComponent implements OnInit {
   constructor(
     private router: Router,
-    private authorizationService: AuthorizationService,
   ) {
     if (localStorage.getItem('authStatus') === 'authed') {
       this.router.navigateByUrl('/home');
-      this.status = true;
     } else if (localStorage.getItem('authStatus') === 'unAuthed') {
       this.router.navigateByUrl('/login');
-      this.status = true;
     }
   }
 
   title = 'SimpleChat';
-  status = false;
-  kek = localStorage.getItem('authStatus');
+
+  ngOnInit() {
+    if (localStorage.login === undefined) {
+      localStorage.setItem('login', '');
+      if (localStorage.password === undefined) {
+        localStorage.setItem('password', '');
+        if (localStorage.id === undefined) {
+          localStorage.setItem('id', 'null');
+          if (localStorage.authStatus === undefined) {
+            localStorage.setItem('authStatus', 'unAuthed');
+            if (localStorage.messArr === undefined) {
+              localStorage.setItem('messArr', 'null');
+            }
+          }
+        }
+      }
+    }
+  }
 }

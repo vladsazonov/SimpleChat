@@ -9,7 +9,7 @@ import {Router} from '@angular/router';
 })
 export class ChatNavBarComponent implements OnInit {
   user = this.authorizationService.currentUser;
-  avatarSymbol = this.user[0].toUpperCase();
+  avatarSymbol = this.user[0].toUpperCase() || 'null';
 
     constructor(
     private authorizationService: AuthorizationService,

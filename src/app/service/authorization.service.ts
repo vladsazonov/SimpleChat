@@ -7,7 +7,7 @@ import {Router} from '@angular/router';
 })
 export class AuthorizationService {
   authStatus = 'unAuthed';
-  currentUser = localStorage.getItem('login');
+  currentUser = localStorage.getItem('login') || 'null';
   userId = +localStorage.getItem('id');
   users = [
     {id: 0, login: 'vlad', password: 'vlad'},

@@ -4,13 +4,30 @@
   </div>
   <div class="messageContainer">
     <h1 class="mat-h3 author">{{sender}}</h1>
-    <h2 class="mat-h4 message">{{message}}</h2>
+    <h2 *ngIf="editStatus !== true" class="mat-h4 message">{{message}}</h2>
+    <form *ngIf="editStatus === true" class="editMessageForm" [formGroup]="editMessageForm" (keyup.enter)="clearInput()">
+      <input value="{{mess}}" (change)="inputState(editMessageForm.value)" formControlName="editMessageInput"
+             class="input" placeholder="Введите сообщение...">
+      <button class="sendButton" (click)="handleSendEditedMess(editMessageForm.value)">
+        <mat-icon class="sendIcon" matSuffix>done</mat-icon>
+      </button>
+    </form>
   </div>
   <div style="margin-left: auto;">
     <h1 class="mat-caption date">{{date}}</h1>
-    <div type="button" class="deleteButton" (click)="handleDeleteMessage(messId, currUserId)">
-      <mat-icon class="closeIco" matSuffix>close</mat-icon>
-    </div>
+    <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+      <mat-icon>more_vert</mat-icon>
+    </button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item (click)="handleDeleteMessage(messId, currUserId)">
+        <mat-icon>delete</mat-icon>
+        <span>Удалить</span>
+      </button>
+      <button mat-menu-item [disabled]="editStatus" (click)="handleEditMessage(messId, currUserId, message, fromUserId)">
+        <mat-icon>edit</mat-icon>
+        <span>Изменить</span>
+      </button>
+    </mat-menu>
   </div>
 </div>
-<mat-divider style="margin: 0 0 0 104px"></mat-divider>
+<mat-divider style="margin: 0 0 0 80px"></mat-divider>

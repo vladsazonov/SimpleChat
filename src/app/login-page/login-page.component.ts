@@ -14,9 +14,6 @@ export class LoginPageComponent implements OnInit {
     password: new FormControl(''),
   });
 
-  log: string;
-  pass: string;
-
   constructor(
     private router: Router,
     private authorizationService: AuthorizationService
@@ -26,11 +23,6 @@ export class LoginPageComponent implements OnInit {
     }
   }
 
-
-
-  /*handleLogin = (login, password) => {
-    this.authorizationService.pushAuthData(login, password);
-  };*/
   handleLogin = (loginData: any) => {
     this.authorizationService.pushAuthData(loginData.login, loginData.password);
   };

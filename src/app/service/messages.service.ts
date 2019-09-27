@@ -1,12 +1,15 @@
 import {Injectable} from '@angular/core';
+import {BehaviorSubject, Observable} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 
 export class MessagesService {
-  newMessagesList: any;
-  messages = JSON.parse(localStorage.getItem('messArr')) || [];
+  private theBoolean = new BehaviorSubject<boolean>(false);
+  stat = this.theBoolean.asObservable();
+  messIndex: number;
+  messages = (JSON.parse(localStorage.getItem('messArr'))) || [];
   newMessage = {
     messId: '',
     sender: '',
@@ -14,6 +17,10 @@ export class MessagesService {
     date: '',
     fromUser: null,
   };
+  editableMess: string;
+
+  constructor() {
+  }
 
   sendMessage = (id: string, Sender: string, Message: string, Date: string, currUserId: number) => {
     this.newMessage = {
@@ -28,22 +35,33 @@ export class MessagesService {
   };
 
   deleteMessage = (messId: string, currUserId: number) => {
-    const del = this.messages.find(a => messId === a.messId);
+    const del = this.messages.find(id => messId === id.messId);
     const currentUserId = +localStorage.getItem('id');
-    console.log(del.messId);
-   /* this.messages.splice(this.messages.filter(elem => elem.messId === del.messId && elem.fromUser === currentUserId), 1);*/
     const a = this.messages.findIndex(elem => elem.messId === del.messId && elem.fromUser === currentUserId);
-    console.log(a);
-    if (a !== 0 && a > 0) {
+    if (a > -1) {
       this.messages.splice(a, 1);
     }
     localStorage.setItem('messArr', JSON.stringify(this.messages));
   };
 
-  getMessages = () => {
-
+  sendEditedMess = (newMess) => {
+    this.messages[this.messIndex].message = newMess;
+    localStorage.setItem('messArr', JSON.stringify(this.messages));
+    this.messIndex = null;
+    this.getTheBoolean(false);
   };
 
-  constructor() {
+  getTheBoolean = (bool) => {
+    this.theBoolean.next(bool);
   }
+
+  editMessage = (messId: string, currUserId: number) => {
+    const edit = this.messages.find(id => messId === id.messId);
+    this.messIndex = this.messages.findIndex(elem => elem.messId === edit.messId && elem.fromUser === currUserId);
+    if (this.messIndex > -1 && messId === edit.messId) {
+      this.getTheBoolean(true);
+      console.log(this.theBoolean);
+      this.editableMess = edit.message;
+    }
+  };
 }
