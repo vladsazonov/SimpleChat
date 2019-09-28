@@ -46,8 +46,14 @@ export class MessageComponent implements AfterViewInit, OnInit {
   };
 
   handleSendEditedMess = (mess) => {
-    this.messagesService.sendEditedMess(mess.editMessageInput);
-    this.check.unsubscribe();
+    if (mess.editMessageInput.length === 0) {
+      mess.editMessageInput = this.mess;
+      this.messagesService.sendEditedMess(this.mess);
+      this.check.unsubscribe();
+    } else {
+      this.messagesService.sendEditedMess(mess.editMessageInput);
+      this.check.unsubscribe();
+    }
   };
 
   clearInput = () => {

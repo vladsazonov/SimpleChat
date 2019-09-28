@@ -39,7 +39,6 @@ export class SendMessageBarComponent implements OnInit {
   handleSendMessage = (sender, text, date, fromUser) => {
     if (text.sendMessageInput.length > 0 && text.sendMessageInput !== ' ') {
       this.id = Date.now() + Math.random().toString(36).substr(2, 9);
-      console.log(typeof (this.id));
       this.messagesService.sendMessage(this.id, sender, text.sendMessageInput, date, fromUser);
       this.clearInput();
     } else {

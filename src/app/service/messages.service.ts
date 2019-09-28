@@ -60,7 +60,6 @@ export class MessagesService {
     this.messIndex = this.messages.findIndex(elem => elem.messId === edit.messId && elem.fromUser === currUserId);
     if (this.messIndex > -1 && messId === edit.messId) {
       this.getTheBoolean(true);
-      console.log(this.theBoolean);
       this.editableMess = edit.message;
     }
   };
