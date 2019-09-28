@@ -14,7 +14,7 @@
   overflow: auto;
   background-color: rgba(255, 255, 255, 0);
   border: 0;
-  padding: 10px 0 10px 20px;
+  padding: 10px 0 10px 10px;
   border-radius: 10px;
   outline: none;
   font-size: 1.3rem;
@@ -34,27 +34,20 @@
   color: #8d8d8d;
 }
 .sendButton {
-  cursor: pointer;
-  color: #026876;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  color: #ffffff;
   margin-left: auto;
   align-self: center;
-  background-color: rgba(255, 255, 255, 0);
-  border: 0;
-  width: 50px;
-  height: 50px;
+  background-color: #1e89d0;
+  width: 100px;
+  height: 40px;
   padding: 0;
-
+  border-radius: 0;
 }
 .sendButton:hover {
-  background-color: rgba(2, 104, 118, 0.09);
-  border-radius: 50%;
-  transition-duration: .2s;
+  background-color: #0b58d0;
 }
 .sendButton:disabled {
-  background-color: rgba(255, 255, 255, 0);
+  background-color: rgb(164, 164, 164);
   cursor: not-allowed;
 }
 .fixButton {
@@ -63,10 +56,14 @@
 .sendMessageForm {
   display: flex;
   width: 100%;
+  align-items: center;
 }
 .sendIcon {
   font-size: 30px;
   width: 30px;
   height: 30px;
+}
+.inputIcon {
+  color: #d7d5d5;
 }
 

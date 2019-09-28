@@ -29,6 +29,7 @@ export class SendMessageBarComponent implements OnInit {
 
   inputState = (data) => {
     this.send = data.sendMessageInput;
+    console.log(this.send);
   };
 
   clearInput = () => {

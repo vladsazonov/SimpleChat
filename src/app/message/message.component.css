@@ -4,10 +4,10 @@
   align-items: center;
 }
 .avatar {
-  border-radius: 50%;
+  border-radius: 0;
   width: 50px;
   height: 50px;
-  background-color: #0191a5;
+  background-color: rgb(98, 192, 255);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -22,8 +22,8 @@
   color: #444444;
 }
 .date {
-  margin: 0 0 0 auto;
-  color: #005662;
+  margin: 0 0 auto 80px;
+  color: #cdcdcd;
 }
 .message {
   margin: 0;
