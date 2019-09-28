@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {AuthorizationService} from '../service/authorization.service';
 import {Router} from '@angular/router';
-import { FormGroup, FormControl } from '@angular/forms';
+import {FormGroup, FormControl} from '@angular/forms';
 
 @Component({
   selector: 'app-login-page',

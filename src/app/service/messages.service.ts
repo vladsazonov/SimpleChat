@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {BehaviorSubject, Observable} from 'rxjs';
+import {BehaviorSubject} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -53,7 +53,7 @@ export class MessagesService {
 
   getTheBoolean = (bool) => {
     this.theBoolean.next(bool);
-  }
+  };
 
   editMessage = (messId: string, currUserId: number) => {
     const edit = this.messages.find(id => messId === id.messId);

@@ -1,12 +1,11 @@
 <div class="messageBarRoot">
-  <form class="sendMessageForm" [formGroup]="sendMessageForm" (keyup.enter)="clearInput()" >
+  <form class="sendMessageForm" [formGroup]="sendMessageForm" (keyup.enter)="clearInput()">
     <mat-icon class="inputIcon" matSuffix>subdirectory_arrow_left</mat-icon>
-      <input value="{{send}}"  (keyup)="inputState(sendMessageForm.value)" formControlName="sendMessageInput" class="input" placeholder="Введите сообщение...">
-    <button class="sendButton" mat-button [disabled]="send.length === 0" (click)="handleSendMessage(sender, sendMessageForm.value, today, currUserId)">
-     SEND
+    <input value="{{send}}" (keyup)="inputState(sendMessageForm.value)" formControlName="sendMessageInput" class="input"
+           placeholder="Введите сообщение...">
+    <button class="sendButton" mat-button [disabled]="send.length === 0"
+            (click)="handleSendMessage(sender, sendMessageForm.value, today, currUserId)">
+      SEND
     </button>
   </form>
-
-  <!--<mat-icon type="button" class="sendButton" matSuffix (click)="handleSendMessage('aaa', 'aaaaaaa', date)">send</mat-icon>-->
-
 </div>

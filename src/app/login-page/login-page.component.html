@@ -10,25 +10,24 @@
       <div class="paperContent">
         <h1 class="mat-display-1">Войти</h1>
         <div class="loginInputs">
-          <form  [formGroup]="loginForm" (ngSubmit)="handleLogin(loginForm.value)">
+          <form [formGroup]="loginForm" (ngSubmit)="handleLogin(loginForm.value)">
+
             <mat-form-field class="fullWidth" appearance="outline">
               <mat-label>Логин</mat-label>
               <input formControlName="login" matInput placeholder="Логин">
               <mat-icon class="inputIcon" matSuffix>person</mat-icon>
             </mat-form-field>
-            <mat-form-field class="fullWidth"   appearance="outline">
+
+            <mat-form-field class="fullWidth" appearance="outline">
               <mat-label>Пароль</mat-label>
-              <input formControlName="password" type="password"  matInput placeholder="Пароль">
+              <input formControlName="password" type="password" matInput placeholder="Пароль">
               <mat-icon class="inputIcon" matSuffix>lock</mat-icon>
             </mat-form-field>
+
             <button type="submit" mat-raised-button class="signInButton">войти</button>
           </form>
-
         </div>
       </div>
-
-
-
     </div>
   </div>
 </div>

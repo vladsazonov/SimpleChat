@@ -1,9 +1,11 @@
 <div class="header">
+
   <div style="display: flex; align-items: center">
     <h1 class="mat-h1">{{user}}</h1>
     <div class="onlineIcon"></div>
     <h1 class="mat-caption online">ONLINE</h1>
   </div>
+
   <div class="funcBlock">
     <div style="display: flex; align-items: center">
       <mat-icon class="funcIcon" matSuffix>call</mat-icon>
@@ -18,12 +20,16 @@
   <div class="messageButton">
     <mat-icon class="messIcon" matSuffix>chat_bubble_outlined</mat-icon>
   </div>
-
 </div>
+
 <div class="chatContent">
   <div class="content" id="msgContainer">
-    <app-message *ngFor="let item of items" [fromUserId]="item.fromUser" [currUserId]="userId" [messId]="item.messId" [sender]="item.sender" [message]="item.message"
-                 [date]="item.date"></app-message>
+    <app-message *ngFor="let item of items" [fromUserId]="item.fromUser"
+                 [currUserId]="userId" [messId]="item.messId"
+                 [sender]="item.sender" [message]="item.message"
+                 [date]="item.date">
+
+    </app-message>
   </div>
 </div>
 <app-send-message-bar></app-send-message-bar>

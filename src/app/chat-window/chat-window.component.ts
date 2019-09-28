@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {MessagesService} from '../service/messages.service';
-import { AuthorizationService } from '../service/authorization.service';
+import {AuthorizationService} from '../service/authorization.service';
 
 @Component({
   selector: 'app-chat-window',
@@ -21,5 +21,4 @@ export class ChatWindowComponent implements OnInit {
 
   ngOnInit() {
   }
-
 }

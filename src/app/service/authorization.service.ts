@@ -1,5 +1,4 @@
-import {EventEmitter, Injectable} from '@angular/core';
-import {Subscription} from 'rxjs';
+import {Injectable} from '@angular/core';
 import {Router} from '@angular/router';
 
 @Injectable({
@@ -10,9 +9,9 @@ export class AuthorizationService {
   currentUser = localStorage.getItem('login') || 'null';
   userId = +localStorage.getItem('id');
   users = [
-    {id: 0, login: 'vlad', password: 'vlad'},
-    {id: 1, login: 'masha', password: 'masha'},
-    {id: 2, login: 'lol', password: 'lol'},
+    {id: 0, login: 'Vlad', password: 'Vlad'},
+    {id: 1, login: 'Masha', password: 'Masha'},
+    {id: 2, login: 'Petya', password: 'Petya'},
   ];
 
   constructor(
