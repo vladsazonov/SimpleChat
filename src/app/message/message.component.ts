@@ -13,6 +13,7 @@ export class MessageComponent implements AfterViewInit, OnInit {
   mess = '';
   editStatus: any;
   check: any;
+  myMessage: boolean = false;
 
   constructor(
     private messagesService: MessagesService,
@@ -34,7 +35,6 @@ export class MessageComponent implements AfterViewInit, OnInit {
   handleDeleteMessage = (messId, currUserId) => {
     this.messagesService.deleteMessage(messId, currUserId);
   };
-
 
   handleEditMessage = (messId, currUserId, message, fromUserId) => {
     if (currUserId === fromUserId) {
@@ -70,6 +70,8 @@ export class MessageComponent implements AfterViewInit, OnInit {
   ngAfterViewInit() {
     this.container = document.getElementById('msgContainer');
     this.container.scrollTop = this.container.scrollHeight;
+    if (this.currUserId === this.fromUserId) {
+      this.myMessage = true;
+    }
   }
-
 }
