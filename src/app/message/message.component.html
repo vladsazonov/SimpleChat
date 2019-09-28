@@ -15,9 +15,9 @@
   </div>
   <h1 class="mat-caption date">{{date}}</h1>
 
-  <div style="margin-left: auto;">
-    <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
-      <mat-icon>more_vert</mat-icon>
+  <div>
+    <button *ngIf="currUserId === fromUserId" mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+      <mat-icon style="color: #b5b5b5">more_vert</mat-icon>
     </button>
     <mat-menu #menu="matMenu">
       <button mat-menu-item (click)="handleDeleteMessage(messId, currUserId)">
