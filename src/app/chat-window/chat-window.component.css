@@ -5,10 +5,9 @@
   left: 0;
   right: 0;
   height: 70px;
-  border-radius: 10px 10px 0 0;
   display: flex;
   align-items: center;
-  padding: 0 70px;
+  padding: 13px 70px;
 }
 
 .mat-h1.mat-h1 {
@@ -17,7 +16,7 @@
 }
 
 .online {
-  margin: 0 0 0 20px;
+  margin: 0 0 0 10px;
   color: #4d6a84;
 }
 
@@ -25,7 +24,7 @@
   background-color: #48fa35;
   width: 10px;
   height: 10px;
-  margin-left: 10px;
+  margin-left: 20px;
   border-radius: 50%;
 }
 
@@ -33,7 +32,7 @@
   background-color: #fff;
   overflow: hidden;
   position: absolute;
-  top: 70px;
+  top: 95px;
   right: 0;
   left: 0;
   bottom: 79px;
@@ -45,4 +44,30 @@
   height: 100%;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
+}
+.mat-h3.mat-h3 {
+  margin: 0 0 0 5px;
+  color: #2f9ae1;
+  font: 500 16px/28px Roboto,"Helvetica Neue",sans-serif;
+}
+.funcIcon {
+  color: #2f9ae1;
+}
+.funcBlock {
+  display: flex;
+  align-items: center;
+  margin-left: auto
+}
+.messageButton {
+  background-color: #69c836;
+  border-radius: 50%;
+  position: absolute;
+  right: 11px;
+  top: 59px;
+  z-index: 1;
+  box-shadow: 0 2px 7px 0 rgba(0, 0, 0, 0.34);
+}
+.messIcon {
+  padding: 20px;
+  color: white;
 }

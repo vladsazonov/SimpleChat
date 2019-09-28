@@ -33,7 +33,7 @@
   left: 0;
   right: 0;
   height: 60px;
-  background-color: #026876;
+  background-color: #1e89d0;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -49,8 +49,8 @@
   align-items: center;
 }
 .userAvatar {
-  background-color: #004e59;
-  margin: 10px 10px 10px auto;
+  background-color: #0069ae;
+  margin: 10px 0 10px 10px;
   border-radius: 50%;
   width: 40px;
   height: 40px;
@@ -65,4 +65,17 @@
 }
 .mat-menu-content {
   padding: 0;
+}
+.leftGroup {
+  color: #0e598b;
+  padding: 0 10px;
+}
+.rightGroup {
+  color: #0e598b;
+  padding: 0 10px;
+}
+.rightBlock {
+  display: flex;
+  align-items: center;
+  margin-left: auto
 }

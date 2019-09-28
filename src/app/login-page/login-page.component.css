@@ -10,7 +10,7 @@
 }
 .backElement {
   height: 311px;
-  background-color: #005662;
+  background-color: #2f9ae1;
   position: absolute;
   top: 0;
   right: 0;
@@ -42,7 +42,7 @@
   bottom: 0;
 }
 .header {
-  background-color: #026876;
+  background-color: #0076c4;
   border-radius: 10px 10px 0 0 ;
   position: absolute;
   top: 0;
@@ -74,6 +74,6 @@
 .signInButton {
   width: 100%;
   margin-top: 50px;
-  background-color: #005662;
+  background-color: #0076c4;
   color: #fff;
 }
