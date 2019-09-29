@@ -13,8 +13,6 @@ export class AppComponent implements OnInit {
   ) {
     if (localStorage.getItem('authStatus') === 'authed') {
       this.router.navigateByUrl('/home');
-    } else if (localStorage.getItem('authStatus') === 'unAuthed') {
-      this.router.navigateByUrl('/login');
     }
   }
 
@@ -31,6 +29,9 @@ export class AppComponent implements OnInit {
             localStorage.setItem('authStatus', 'unAuthed');
             if (localStorage.messArr === undefined) {
               localStorage.setItem('messArr', 'null');
+              if (localStorage.users === undefined) {
+                localStorage.setItem('users', '[]');
+              }
             }
           }
         }
