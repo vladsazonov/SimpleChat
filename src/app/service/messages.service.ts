@@ -1,13 +1,16 @@
 import {Injectable} from '@angular/core';
 import {BehaviorSubject} from 'rxjs';
+import {element} from 'protractor';
 
 @Injectable({
   providedIn: 'root'
 })
 
 export class MessagesService {
-  private theBoolean = new BehaviorSubject<boolean>(false);
+  public theBoolean = new BehaviorSubject<boolean>(false);
+  public changeBan = new BehaviorSubject<boolean>(false);
   stat = this.theBoolean.asObservable();
+  otherMess = this.changeBan.asObservable();
   messIndex: number;
   messages = (JSON.parse(localStorage.getItem('messArr'))) || [];
   newMessage = {
@@ -36,7 +39,7 @@ export class MessagesService {
 
   deleteMessage = (messId: string, currUserId: number) => {
     const del = this.messages.find(id => messId === id.messId);
-    const currentUserId = +localStorage.getItem('id');
+    const currentUserId = localStorage.getItem('id');
     const a = this.messages.findIndex(elem => elem.messId === del.messId && elem.fromUser === currentUserId);
     if (a > -1) {
       this.messages.splice(a, 1);
@@ -55,12 +58,18 @@ export class MessagesService {
     this.theBoolean.next(bool);
   };
 
-  editMessage = (messId: string, currUserId: number) => {
+  discardEdit = (bool) => {
+    this.changeBan.next(bool);
+  };
+
+  editMessage = (messId: string, currUserId: string) => {
     const edit = this.messages.find(id => messId === id.messId);
     this.messIndex = this.messages.findIndex(elem => elem.messId === edit.messId && elem.fromUser === currUserId);
     if (this.messIndex > -1 && messId === edit.messId) {
       this.getTheBoolean(true);
       this.editableMess = edit.message;
+    } else {
+      this.getTheBoolean(false);
     }
   };
 }

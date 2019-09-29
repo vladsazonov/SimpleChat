@@ -18,9 +18,6 @@ export class LoginPageComponent implements OnInit {
     private router: Router,
     private authorizationService: AuthorizationService
   ) {
-    if (localStorage.getItem('authStatus') === 'authed') {
-      this.router.navigate(['/login']);
-    }
   }
 
   handleLogin = (loginData: any) => {

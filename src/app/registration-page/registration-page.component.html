@@ -8,24 +8,24 @@
       </div>
 
       <div class="paperContent">
-        <h1 class="mat-display-1">Войти</h1>
+        <h1 class="mat-display-1">Регистрация</h1>
         <div class="loginInputs">
-          <form style="text-align: center" [formGroup]="loginForm" (ngSubmit)="handleLogin(loginForm.value)">
+          <form style="text-align: center" [formGroup]="registerForm" (ngSubmit)="handlePushRegData(registerForm.value)">
 
             <mat-form-field class="fullWidth" appearance="outline">
               <mat-label>Логин</mat-label>
-              <input formControlName="login" matInput placeholder="Логин">
+              <input formControlName="newLogin" matInput placeholder="Логин">
               <mat-icon class="inputIcon" matSuffix>person</mat-icon>
             </mat-form-field>
 
             <mat-form-field class="fullWidth" appearance="outline">
               <mat-label>Пароль</mat-label>
-              <input formControlName="password" type="password" matInput placeholder="Пароль">
+              <input formControlName="newPassword" type="password" matInput placeholder="Пароль">
               <mat-icon class="inputIcon" matSuffix>lock</mat-icon>
             </mat-form-field>
 
-            <button type="submit" mat-raised-button class="signInButton">войти</button>
-            <a class="signLink" [routerLink]="['/registration']"><h6 class="mat-button">регистрация</h6 ><h6></h6></a>
+            <button type="submit" mat-raised-button class="signInButton">Зарегистрироваться</button>
+            <a class="signLink" [routerLink]="['/login']"><h6 class="mat-button">войти</h6 ><h6></h6></a>
           </form>
         </div>
       </div>
