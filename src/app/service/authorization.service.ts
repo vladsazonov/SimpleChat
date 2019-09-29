@@ -45,15 +45,17 @@ export class AuthorizationService {
     console.log(this.users);
     const a = this.users.find(user => user.login === log);
     if (!a) {
-      const userId = Date.now() + Math.random().toString(36).substr(2, 9);
-      this.newUser = {
-        id: userId,
-        login: log,
-        password: pass,
-      };
-      this.users.push(this.newUser);
-      localStorage.setItem('users', JSON.stringify(this.users));
-      this.router.navigateByUrl('/login');
+      if (log && pass) {
+        const userId = Date.now() + Math.random().toString(36).substr(2, 9);
+        this.newUser = {
+          id: userId,
+          login: log,
+          password: pass,
+        };
+        this.users.push(this.newUser);
+        localStorage.setItem('users', JSON.stringify(this.users));
+        this.router.navigateByUrl('/login');
+      }
     } else {
       alert('Имя пользователя занято');
     }

@@ -10,17 +10,17 @@
       <div class="paperContent">
         <h1 class="mat-display-1">Регистрация</h1>
         <div class="loginInputs">
-          <form style="text-align: center" [formGroup]="registerForm" (ngSubmit)="handlePushRegData(registerForm.value)">
+          <form required style="text-align: center" [formGroup]="registerForm" (ngSubmit)="handlePushRegData(registerForm.value)">
 
             <mat-form-field class="fullWidth" appearance="outline">
               <mat-label>Логин</mat-label>
-              <input formControlName="newLogin" matInput placeholder="Логин">
+              <input required formControlName="newLogin" matInput placeholder="Логин">
               <mat-icon class="inputIcon" matSuffix>person</mat-icon>
             </mat-form-field>
 
             <mat-form-field class="fullWidth" appearance="outline">
               <mat-label>Пароль</mat-label>
-              <input formControlName="newPassword" type="password" matInput placeholder="Пароль">
+              <input required formControlName="newPassword" type="password" matInput placeholder="Пароль">
               <mat-icon class="inputIcon" matSuffix>lock</mat-icon>
             </mat-form-field>
 
