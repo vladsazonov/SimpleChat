@@ -4,8 +4,8 @@
   </div>
   <div class="messageContainer">
     <h1 class="mat-h3 author">{{sender}}</h1>
-    <h2 *ngIf="editStatus !== true" class="mat-h4 message">{{message}}</h2>
-    <form *ngIf="editStatus === true" class="editMessageForm" [formGroup]="editMessageForm"
+    <h2 *ngIf="!editStatus" class="mat-h4 message">{{message}}</h2>
+    <form *ngIf="editStatus" class="editMessageForm" [formGroup]="editMessageForm"
           (keyup.enter)="clearInput()">
       <input value="{{mess}}" (keyup)="inputState(editMessageForm.value)" formControlName="editMessageInput"
              class="input" placeholder="Введите сообщение...">
@@ -17,17 +17,16 @@
   <h1 class="mat-caption date">{{date}}</h1>
 
   <div>
-    <button [disabled]="!editStatus && otherMess" *ngIf="currUserId === fromUserId" mat-icon-button [matMenuTriggerFor]="menu"
-            aria-label="menu" >
+    <button [disabled]="otherMess" *ngIf="currUserId === fromUserId" mat-icon-button [matMenuTriggerFor]="menu"
+            aria-label="menu">
       <mat-icon style="color: #b5b5b5">more_vert</mat-icon>
     </button>
     <mat-menu #menu="matMenu">
-      <button mat-menu-item (click)="handleDeleteMessage(messId, currUserId)">
+      <button mat-menu-item (click)="messagesService.deleteMessage(messId, currUserId)">
         <mat-icon>delete</mat-icon>
         <span>Удалить</span>
       </button>
-      <button mat-menu-item [disabled]="editStatus && otherMess"
-              (click)="handleEditMessage(messId, currUserId, message, fromUserId)">
+      <button mat-menu-item (click)="handleEditMessage(messId, currUserId, message)">
         <mat-icon>edit</mat-icon>
         <span>Изменить</span>
       </button>

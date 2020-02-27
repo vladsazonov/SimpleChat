@@ -7,7 +7,11 @@ import {AuthorizationService} from '../service/authorization.service';
   templateUrl: './chat-window.component.html',
   styleUrls: ['./chat-window.component.css']
 })
+
 export class ChatWindowComponent implements OnInit {
+  items: object[];
+  user: string;
+  userId: string;
 
   constructor(
     private messagesService: MessagesService,
@@ -15,10 +19,9 @@ export class ChatWindowComponent implements OnInit {
   ) {
   }
 
-  items = this.messagesService.messages;
-  user = this.authorizationService.currentUser;
-  userId = this.authorizationService.userId;
-
-  ngOnInit() {
+  ngOnInit(): void {
+    this.items = this.messagesService.messages;
+    this.user = this.authorizationService.currentUser;
+    this.userId = this.authorizationService.userId;
   }
 }

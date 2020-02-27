@@ -1,29 +1,31 @@
 import {Injectable} from '@angular/core';
 import {Router} from '@angular/router';
 
+interface INewUser {
+  id: string;
+  login: string;
+  password: string;
+}
+
 @Injectable({
   providedIn: 'root'
 })
-export class AuthorizationService {
-  authStatus = 'unAuthed';
-  currentUser = localStorage.getItem('login') || 'null';
-  userId = localStorage.getItem('id');
-  /* users = [
-     {id: 0, login: 'Vlad', password: 'Vlad'},
-     {id: 1, login: 'Masha', password: 'Masha'},
-     {id: 2, login: 'Petya', password: 'Petya'},
-   ];*/
-  users = (JSON.parse(localStorage.getItem('users'))) || [];
-  newUser = {
-    id: '',
-    login: '',
-    password: '',
-  };
 
+export class AuthorizationService {
   constructor(
     private router: Router,
   ) {
   }
+
+  authStatus = 'unAuthed';
+  currentUser = localStorage.getItem('login') || 'null';
+  userId = localStorage.getItem('id');
+  users = (JSON.parse(localStorage.getItem('users'))) || [];
+  newUser: INewUser = {
+    id: '',
+    login: '',
+    password: '',
+  };
 
   pushAuthData = (login, password) => {
     for (const user of this.users) {

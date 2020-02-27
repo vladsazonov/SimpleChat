@@ -9,10 +9,6 @@ import {FormGroup, FormControl} from '@angular/forms';
   styleUrls: ['./login-page.component.css']
 })
 export class LoginPageComponent implements OnInit {
-  loginForm = new FormGroup({
-    login: new FormControl(''),
-    password: new FormControl(''),
-  });
 
   constructor(
     private router: Router,
@@ -20,8 +16,13 @@ export class LoginPageComponent implements OnInit {
   ) {
   }
 
-  handleLogin = (loginData: any) => {
-    this.authorizationService.pushAuthData(loginData.login, loginData.password);
+  loginForm = new FormGroup({
+    login: new FormControl(''),
+    password: new FormControl(''),
+  });
+
+  handleLogin = (login: string, password: string): void => {
+    this.authorizationService.pushAuthData(login, password);
   };
 
   ngOnInit() {
@@ -29,5 +30,4 @@ export class LoginPageComponent implements OnInit {
       this.router.navigate(['/home']);
     }
   }
-
 }

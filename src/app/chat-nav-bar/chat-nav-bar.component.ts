@@ -1,27 +1,25 @@
 import {Component, OnInit} from '@angular/core';
 import {AuthorizationService} from '../service/authorization.service';
-import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-chat-nav-bar',
   templateUrl: './chat-nav-bar.component.html',
   styleUrls: ['./chat-nav-bar.component.css']
 })
-export class ChatNavBarComponent implements OnInit {
-  user = this.authorizationService.currentUser;
-  avatarSymbol = this.user[0].toUpperCase() || 'null';
 
-    constructor(
-    private authorizationService: AuthorizationService,
-    private router: Router,
+export class ChatNavBarComponent implements OnInit {
+  user: string;
+  avatarSymbol: string;
+
+  constructor(
+    private authorizationService: AuthorizationService
   ) {
   }
 
-  handleUnLogin = () => {
-    this.authorizationService.unAuth();
-    this.router.navigate(['/login']);
-  };
-
-  ngOnInit() {
+  ngOnInit(): void {
+    this.user = this.authorizationService.currentUser;
+    this.avatarSymbol = this.user[0].toUpperCase();
   }
 }
+
+

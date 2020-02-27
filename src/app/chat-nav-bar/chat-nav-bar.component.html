@@ -11,7 +11,7 @@
       <mat-icon class="rightGroup" matSuffix>message</mat-icon>
       <div class="userAvatar" [matMenuTriggerFor]="menu"><h1 class="mat-h2">{{avatarSymbol}}</h1>
         <mat-menu #menu="matMenu" style="padding: 0" >
-          <button mat-menu-item (click)="handleUnLogin()"><mat-icon class="inputIcon" matSuffix>exit_to_app</mat-icon>Выйти</button>
+          <button mat-menu-item (click)="authorizationService.unAuth()"><mat-icon class="inputIcon" matSuffix>exit_to_app</mat-icon>Выйти</button>
         </mat-menu>
       </div>
     </div>

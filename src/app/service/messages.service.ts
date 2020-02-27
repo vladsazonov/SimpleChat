@@ -1,14 +1,13 @@
 import {Injectable} from '@angular/core';
 import {BehaviorSubject} from 'rxjs';
 import {element} from 'protractor';
-
 @Injectable({
   providedIn: 'root'
 })
 
 export class MessagesService {
-  public theBoolean = new BehaviorSubject<boolean>(false);
-  public changeBan = new BehaviorSubject<boolean>(false);
+   theBoolean = new BehaviorSubject<boolean>(false);
+   changeBan = new BehaviorSubject<boolean>(false);
   stat = this.theBoolean.asObservable();
   otherMess = this.changeBan.asObservable();
   messIndex: number;
@@ -23,6 +22,7 @@ export class MessagesService {
   editableMess: string;
 
   constructor() {
+
   }
 
   sendMessage = (id: string, Sender: string, Message: string, Date: string, currUserId: number) => {
@@ -37,7 +37,7 @@ export class MessagesService {
     localStorage.setItem('messArr', JSON.stringify(this.messages));
   };
 
-  deleteMessage = (messId: string, currUserId: number) => {
+  deleteMessage = (messId: string, currUserId: string) => {
     const del = this.messages.find(id => messId === id.messId);
     const currentUserId = localStorage.getItem('id');
     const a = this.messages.findIndex(elem => elem.messId === del.messId && elem.fromUser === currentUserId);
