@@ -26,8 +26,4 @@ export class LoginPageComponent implements OnInit {
       this.router.navigate(['/home']);
     }
   }
-
-  handleLogin = (login: string, password: string): void => {
-    this.authorizationService.pushAuthData(login, password);
-  }
 }

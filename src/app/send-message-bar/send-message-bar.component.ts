@@ -38,15 +38,15 @@ export class SendMessageBarComponent implements OnInit {
     this.senderName = this.authorizationService.currentUser;
   }
 
-  inputState = (data: any): void => {
+  inputState(data: any): void {
     this.inputValue = data.sendMessageInput;
   }
 
-  clearInput = (): void => {
+  clearInput(): void {
     this.inputValue = '';
   }
 
-  handleSendMessage = (inputData: any, date: string, fromUserId: string, senderName: string): void => {
+  handleSendMessage(inputData: any, date: string, fromUserId: string, senderName: string): void {
     if (inputData.sendMessageInput.length > 0 && inputData.sendMessageInput.match(/^\s+$/) === null) {
       this.id = Date.now() + Math.random().toString(36).substr(2, 9);
       this.messagesService.sendMessage(this.id, inputData.sendMessageInput, date, fromUserId, senderName);

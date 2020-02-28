@@ -25,14 +25,14 @@ export class AuthorizationService {
     this.getAuthorizationData();
   }
 
-  getAuthorizationData = (): void => {
+  getAuthorizationData(): void {
     this.authStatus = 'unAuthed';
     this.currentUser = localStorage.getItem('login') || 'null';
     this.userId = localStorage.getItem('id');
     this.users = (JSON.parse(localStorage.getItem('users'))) || [];
   }
 
-  pushAuthData = (login: string, password: string): void => {
+  pushAuthData(login: string, password: string): void {
     for (const user of this.users) {
       if (login === user.login && password === user.password) {
         localStorage.setItem('id', user.id);
@@ -46,7 +46,7 @@ export class AuthorizationService {
     }
   }
 
-  pushRegData = (log: string, pass: string): void => {
+  pushRegData(log: string, pass: string): void {
     const a = this.users.find(user => user.login === log);
     if (!a) {
       if (log && pass) {
@@ -65,7 +65,7 @@ export class AuthorizationService {
     }
   }
 
-  unAuth = (): void => {
+  unAuth(): void {
     localStorage.removeItem('id');
     localStorage.removeItem('login');
     localStorage.removeItem('password');

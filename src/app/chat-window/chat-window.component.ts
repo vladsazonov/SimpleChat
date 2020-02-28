@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {MessagesService} from '../service/messages.service';
 import {AuthorizationService} from '../service/authorization.service';
+import {IMessage} from '../models/message';
 
 @Component({
   selector: 'app-chat-window',
@@ -9,7 +10,7 @@ import {AuthorizationService} from '../service/authorization.service';
 })
 
 export class ChatWindowComponent implements OnInit {
-  messages: object[];
+  messages: IMessage[];
   currentUserId: string;
 
   constructor(

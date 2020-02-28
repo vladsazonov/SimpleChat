@@ -46,14 +46,14 @@ export class MessageComponent implements AfterViewInit, OnInit {
     this.container.scrollTop = this.container.scrollHeight;
   }
 
-  handleEditMessage = (messId: string, message: string): void => {
+  handleEditMessage(messId: string, message: string): void {
     this.otherMess = true;
     this.check = this.messagesService.stat.subscribe(status => this.editStatus = status);
     this.messageText = message;
     this.messagesService.editMessage(messId);
   }
 
-  handleSendEditedMess = (inputData: IInputData): void => {
+  handleSendEditedMess(inputData: IInputData): void {
     inputData.editMessageInput = this.messageText;
     if (typeof inputData.editMessageInput !== undefined &&
       inputData.editMessageInput !== '' && inputData.editMessageInput.match(/^\s+$/) === null) {
@@ -65,11 +65,11 @@ export class MessageComponent implements AfterViewInit, OnInit {
     this.otherMess = false;
   }
 
-  clearInput = (): void => {
+  clearInput(): void {
     this.messageText = '';
   }
 
-  inputState = (inputData: IInputData): void => {
+  inputState(inputData: IInputData): void {
     console.log('data', inputData);
     this.messageText = inputData.editMessageInput;
   }

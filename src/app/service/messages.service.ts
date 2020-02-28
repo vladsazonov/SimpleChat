@@ -1,13 +1,14 @@
 import {Injectable} from '@angular/core';
 import {BehaviorSubject, Observable} from 'rxjs';
+import {IMessage} from '../models/message';
 
-interface INewMessage {
+/*interface IMessage {
   messId: string;
   message: string;
   date: string;
   userId: string;
   senderName: string;
-}
+}*/
 
 @Injectable({
   providedIn: 'root'
@@ -16,8 +17,8 @@ interface INewMessage {
 export class MessagesService {
 
   messIndex: number;
-  newMessage: INewMessage;
-  messages: INewMessage[];
+  newMessage: IMessage;
+  messages: IMessage[];
   stat: Observable<boolean>;
   editableMess: string;
 
@@ -27,12 +28,12 @@ export class MessagesService {
 
   theBoolean = new BehaviorSubject<boolean>(false);
 
-  getMessagesData = (): void => {
+  getMessagesData(): void {
     this.stat = this.theBoolean.asObservable();
     this.messages = (JSON.parse(localStorage.getItem('messArr'))) || [];
   }
 
-  sendMessage = (id: string, Message: string, Date: string, currentUserId: string, SenderName: string): void => {
+  sendMessage(id: string, Message: string, Date: string, currentUserId: string, SenderName: string): void {
     this.newMessage = {
       messId: id,
       message: Message,
@@ -44,7 +45,7 @@ export class MessagesService {
     localStorage.setItem('messArr', JSON.stringify(this.messages));
   }
 
-  deleteMessage = (messId: string): void => {
+  deleteMessage(messId: string): void {
     const del = this.messages.find(id => messId === id.messId);
     const currentUserId = localStorage.getItem('id');
     const a = this.messages.findIndex(elem => elem.messId === del.messId && elem.userId === currentUserId);
@@ -54,11 +55,11 @@ export class MessagesService {
     localStorage.setItem('messArr', JSON.stringify(this.messages));
   }
 
-  getTheBoolean = (bool: boolean): void => {
+  getTheBoolean(bool: boolean): void {
     this.theBoolean.next(bool);
   }
 
-  editMessage = (messId: string): void => {
+  editMessage(messId: string): void {
     const edit = this.messages.find(id => messId === id.messId);
     this.messIndex = this.messages.findIndex(elem => elem.messId === edit.messId);
     if (this.messIndex > -1 && messId === edit.messId) {
@@ -69,7 +70,7 @@ export class MessagesService {
     }
   }
 
-  sendEditedMess = (newMessage: string): void => {
+  sendEditedMess(newMessage: string): void {
     this.messages[this.messIndex].message = newMessage;
     localStorage.setItem('messArr', JSON.stringify(this.messages));
     this.messIndex = null;

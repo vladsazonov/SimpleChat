@@ -11,7 +11,7 @@
         <h1 class="mat-display-1">Войти</h1>
         <div class="loginInputs">
           <form style="text-align: center" [formGroup]="loginForm"
-                (ngSubmit)="handleLogin(loginForm.value.login, loginForm.value.password)">
+                (ngSubmit)="authorizationService.pushAuthData(loginForm.value.login, loginForm.value.password)">
             <mat-form-field class="fullWidth" appearance="outline">
               <mat-label>Логин</mat-label>
               <input required formControlName="login" matInput placeholder="Логин">
