@@ -22,7 +22,6 @@ export class MessageComponent implements AfterViewInit, OnInit {
   @Input() date: string;
   @Input() messId: string;
   @Input() deleteMessage: string;
-
   @Input() userId: string;
   @Input() senderName: string;
 
@@ -76,7 +75,6 @@ export class MessageComponent implements AfterViewInit, OnInit {
   }
 
   inputState(inputData: IInputData): void {
-    console.log('data', inputData);
     this.messageText = inputData.editMessageInput;
   }
 }

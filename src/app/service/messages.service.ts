@@ -12,7 +12,6 @@ export class MessagesService {
   newMessage: IMessage;
   messages: IMessage[];
   stat: Observable<boolean>;
-  editableMess: string;
 
   constructor() {
     this.getMessagesData();
@@ -38,11 +37,11 @@ export class MessagesService {
   }
 
   deleteMessage(messId: string): void {
-    const del = this.messages.find(id => messId === id.messId);
+    const deletedMessage = this.messages.find(id => messId === id.messId);
     const currentUserId = localStorage.getItem('id');
-    const a = this.messages.findIndex(elem => elem.messId === del.messId && elem.userId === currentUserId);
-    if (a > -1) {
-      this.messages.splice(a, 1);
+    const deletedMessageIndex = this.messages.findIndex(elem => elem.messId === deletedMessage.messId && elem.userId === currentUserId);
+    if (deletedMessageIndex > -1) {
+      this.messages.splice(deletedMessageIndex, 1);
     }
     localStorage.setItem('messArr', JSON.stringify(this.messages));
   }
@@ -52,11 +51,10 @@ export class MessagesService {
   }
 
   editMessage(messId: string): void {
-    const edit = this.messages.find(id => messId === id.messId);
-    this.messIndex = this.messages.findIndex(elem => elem.messId === edit.messId);
-    if (this.messIndex > -1 && messId === edit.messId) {
+    const findedMessage = this.messages.find(id => messId === id.messId);
+    this.messIndex = this.messages.findIndex(elem => elem.messId === findedMessage.messId);
+    if (this.messIndex > -1 && messId === findedMessage.messId) {
       this.getTheBoolean(true);
-      this.editableMess = edit.message;
     } else {
       this.getTheBoolean(false);
     }
