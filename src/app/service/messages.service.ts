@@ -2,14 +2,6 @@ import {Injectable} from '@angular/core';
 import {BehaviorSubject, Observable} from 'rxjs';
 import {IMessage} from '../models/message';
 
-/*interface IMessage {
-  messId: string;
-  message: string;
-  date: string;
-  userId: string;
-  senderName: string;
-}*/
-
 @Injectable({
   providedIn: 'root'
 })
