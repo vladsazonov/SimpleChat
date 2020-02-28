@@ -14,7 +14,7 @@ export class SendMessageBarComponent implements OnInit {
   inputValue: string;
   id: string;
   date: Date;
-  minutes: number | string;
+  minutes: number;
   sendingDate: string;
   currentUserId: string;
   senderName: string;
@@ -32,8 +32,7 @@ export class SendMessageBarComponent implements OnInit {
   ngOnInit(): void {
     this.date = new Date();
     this.minutes = this.date.getMinutes();
-    this.minutes = this.minutes > 9 ? this.minutes : '0' + this.minutes;
-    this.sendingDate = this.date.getHours() + ':' + this.minutes;
+    this.sendingDate = this.date.getHours() + ':' + (this.minutes > 9 ? this.minutes.toString() : '0' + this.minutes.toString());
     this.currentUserId = this.authorizationService.userId;
     this.senderName = this.authorizationService.currentUser;
   }
