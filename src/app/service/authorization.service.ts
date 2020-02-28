@@ -14,7 +14,7 @@ interface INewUser {
 export class AuthorizationService {
 
   authStatus: string;
-  currentUser: string;
+  currentUserName: string;
   userId: string;
   users: INewUser[];
   newUser: INewUser;
@@ -27,7 +27,7 @@ export class AuthorizationService {
 
   getAuthorizationData(): void {
     this.authStatus = 'unAuthed';
-    this.currentUser = localStorage.getItem('login') || 'null';
+    this.currentUserName = localStorage.getItem('login') || 'null';
     this.userId = localStorage.getItem('id');
     this.users = (JSON.parse(localStorage.getItem('users'))) || [];
   }
@@ -39,22 +39,22 @@ export class AuthorizationService {
         localStorage.setItem('login', login);
         localStorage.setItem('password', password);
         localStorage.setItem('authStatus', 'authed');
-        this.currentUser = localStorage.getItem('login');
+        this.currentUserName = localStorage.getItem('login');
         this.userId = localStorage.getItem('id');
         this.router.navigateByUrl('/home');
       }
     }
   }
 
-  pushRegData(log: string, pass: string): void {
-    const a = this.users.find(user => user.login === log);
-    if (!a) {
-      if (log && pass) {
+  pushRegData(Login: string, Password: string): void {
+    const isUserExists = this.users.find(user => user.login === Login);
+    if (!isUserExists) {
+      if (Login && Password) {
         const userId = Date.now() + Math.random().toString(36).substr(2, 9);
         this.newUser = {
           id: userId,
-          login: log,
-          password: pass,
+          login: Login,
+          password: Password,
         };
         this.users.push(this.newUser);
         localStorage.setItem('users', JSON.stringify(this.users));

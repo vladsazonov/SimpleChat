@@ -16,7 +16,7 @@ export class ChatNavBarComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.avatarSymbol = this.authorizationService.currentUser[0].toUpperCase();
+    this.avatarSymbol = this.authorizationService.currentUserName[0].toUpperCase();
   }
 }
 

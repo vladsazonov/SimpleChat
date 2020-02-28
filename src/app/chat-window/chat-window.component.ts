@@ -11,7 +11,7 @@ import {IMessage} from '../models/message';
 
 export class ChatWindowComponent implements OnInit {
   messages: IMessage[];
-  currentUserId: string;
+  currentUserName: string;
 
   constructor(
     private messagesService: MessagesService,
@@ -21,6 +21,6 @@ export class ChatWindowComponent implements OnInit {
 
   ngOnInit(): void {
     this.messages = this.messagesService.messages;
-    this.currentUserId = this.authorizationService.userId;
+    this.currentUserName = this.authorizationService.currentUserName;
   }
 }

@@ -34,7 +34,7 @@ export class SendMessageBarComponent implements OnInit {
     this.minutes = this.date.getMinutes();
     this.sendingDate = this.date.getHours() + ':' + (this.minutes > 9 ? this.minutes.toString() : '0' + this.minutes.toString());
     this.currentUserId = this.authorizationService.userId;
-    this.senderName = this.authorizationService.currentUser;
+    this.senderName = this.authorizationService.currentUserName;
   }
 
   inputState(data: any): void {

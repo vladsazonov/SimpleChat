@@ -1,7 +1,7 @@
 <div class="header">
 
   <div style="display: flex; align-items: center">
-    <h1 class="mat-h1">{{currentUser}}</h1>
+    <h1 class="mat-h1">{{currentUserName}}</h1>
     <div class="onlineIcon"></div>
     <h1 class="mat-caption online">ONLINE</h1>
   </div>
@@ -25,7 +25,6 @@
 <div class="chatContent">
   <div class="content" id="msgContainer">
     <app-message *ngFor="let message of messages"
-                 [currentUserId]="currentUserId"
                  [messId]="message.messId"
                  [message]="message.message"
                  [date]="message.date"

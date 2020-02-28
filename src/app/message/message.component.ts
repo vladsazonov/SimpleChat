@@ -1,5 +1,6 @@
 import {Component, OnInit, Input, AfterViewInit} from '@angular/core';
 import {MessagesService} from '../service/messages.service';
+import {AuthorizationService} from '../service/authorization.service';
 import {FormControl, FormGroup} from '@angular/forms';
 import {Subscription} from 'rxjs';
 
@@ -14,11 +15,14 @@ interface IInputData {
 })
 
 export class MessageComponent implements AfterViewInit, OnInit {
+
+  currentUserId: string;
+
   @Input() message: string;
   @Input() date: string;
   @Input() messId: string;
   @Input() deleteMessage: string;
-  @Input() currentUserId: string;
+
   @Input() userId: string;
   @Input() senderName: string;
 
@@ -30,6 +34,7 @@ export class MessageComponent implements AfterViewInit, OnInit {
 
   constructor(
     private messagesService: MessagesService,
+    private authorizationService: AuthorizationService
   ) {
   }
 
@@ -39,6 +44,7 @@ export class MessageComponent implements AfterViewInit, OnInit {
 
   ngOnInit(): void {
     this.messagesService.stat.subscribe(status => this.otherMess = status);
+    this.currentUserId = this.authorizationService.userId;
   }
 
   ngAfterViewInit(): void {
