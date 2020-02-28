@@ -1,6 +1,11 @@
 import {Component, OnInit, Input, AfterViewInit} from '@angular/core';
 import {MessagesService} from '../service/messages.service';
 import {FormControl, FormGroup} from '@angular/forms';
+import {Subscription} from 'rxjs';
+
+interface IInputData {
+  editMessageInput: string;
+}
 
 @Component({
   selector: 'app-message',
@@ -9,19 +14,19 @@ import {FormControl, FormGroup} from '@angular/forms';
 })
 
 export class MessageComponent implements AfterViewInit, OnInit {
-  container: HTMLElement;
-  editStatus: boolean;
-  check: any;
-  otherMess: boolean;
-  mess: string;
-
   @Input() sender: string;
   @Input() message: string;
   @Input() date: string;
   @Input() messId: string;
   @Input() deleteMessage: string;
   @Input() currUserId: string;
-  @Input() fromUserId: number;
+  @Input() fromUserId: string;
+
+  container: HTMLElement;
+  editStatus: boolean;
+  check: Subscription;
+  otherMess: boolean;
+  mess: string;
 
   constructor(
     private messagesService: MessagesService,
@@ -32,38 +37,40 @@ export class MessageComponent implements AfterViewInit, OnInit {
     editMessageInput: new FormControl(''),
   });
 
+  ngOnInit(): void {
+    this.messagesService.stat.subscribe(status => this.otherMess = status);
+  }
+
+  ngAfterViewInit(): void {
+    this.container = document.getElementById('msgContainer');
+    this.container.scrollTop = this.container.scrollHeight;
+  }
+
   handleEditMessage = (messId: string, currUserId: string, message: string): void => {
     this.otherMess = true;
     this.check = this.messagesService.stat.subscribe(status => this.editStatus = status);
     this.mess = message;
     this.messagesService.editMessage(messId, currUserId);
-  };
+  }
 
-  handleSendEditedMess = (message: any): void => {
-    message.editMessageInput = this.mess;
-    if (typeof message.editMessageInput !== undefined && message.editMessageInput !== '' && message.editMessageInput.match(/^\s+$/) === null) {
+  handleSendEditedMess = (inputData: IInputData): void => {
+    inputData.editMessageInput = this.mess;
+    if (typeof inputData.editMessageInput !== undefined &&
+      inputData.editMessageInput !== '' && inputData.editMessageInput.match(/^\s+$/) === null) {
       this.messagesService.sendEditedMess(this.mess);
       this.check.unsubscribe();
     } else {
       alert('Empty message');
     }
     this.otherMess = false;
-  };
-
-  clearInput = () => {
-    this.mess = '';
-  };
-
-  inputState = (data: any) => {
-    this.mess = data.editMessageInput;
-  };
-
-  ngOnInit() {
-    this.messagesService.stat.subscribe(status => this.otherMess = status);
   }
 
-  ngAfterViewInit() {
-    this.container = document.getElementById('msgContainer');
-    this.container.scrollTop = this.container.scrollHeight;
+  clearInput = (): void => {
+    this.mess = '';
+  }
+
+  inputState = (inputData: IInputData): void => {
+    console.log('data', inputData);
+    this.mess = inputData.editMessageInput;
   }
 }

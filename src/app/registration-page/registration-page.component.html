@@ -10,7 +10,8 @@
       <div class="paperContent">
         <h1 class="mat-display-1">Регистрация</h1>
         <div class="loginInputs">
-          <form required style="text-align: center" [formGroup]="registerForm" (ngSubmit)="handlePushRegData(registerForm.value)">
+          <form style="text-align: center" [formGroup]="registerForm"
+                (ngSubmit)="authorizationService.pushRegData(registerForm.value.newLogin, registerForm.value.newPassword)">
 
             <mat-form-field class="fullWidth" appearance="outline">
               <mat-label>Логин</mat-label>
@@ -25,7 +26,7 @@
             </mat-form-field>
 
             <button type="submit" mat-raised-button class="signInButton">Зарегистрироваться</button>
-            <a class="signLink" [routerLink]="['/login']"><h6 class="mat-button">войти</h6 ><h6></h6></a>
+            <a class="signLink" [routerLink]="['/login']"><h6 class="mat-button">войти</h6><h6></h6></a>
           </form>
         </div>
       </div>

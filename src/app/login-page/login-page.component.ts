@@ -21,13 +21,13 @@ export class LoginPageComponent implements OnInit {
     password: new FormControl(''),
   });
 
-  handleLogin = (login: string, password: string): void => {
-    this.authorizationService.pushAuthData(login, password);
-  };
-
-  ngOnInit() {
+  ngOnInit(): void {
     if (localStorage.getItem('authStatus') === 'authed') {
       this.router.navigate(['/home']);
     }
+  }
+
+  handleLogin = (login: string, password: string): void => {
+    this.authorizationService.pushAuthData(login, password);
   }
 }

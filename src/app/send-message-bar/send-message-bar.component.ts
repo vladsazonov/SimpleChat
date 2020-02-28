@@ -11,6 +11,14 @@ import {FormControl, FormGroup} from '@angular/forms';
 
 export class SendMessageBarComponent implements OnInit {
 
+  send: string;
+  id: string;
+  date: Date;
+  minutes: number | string;
+  today: string;
+  sender: string;
+  currUserId: string;
+
   constructor(
     private messagesService: MessagesService,
     private authorizationService: AuthorizationService,
@@ -20,34 +28,32 @@ export class SendMessageBarComponent implements OnInit {
   sendMessageForm = new FormGroup({
     sendMessageInput: new FormControl(''),
   });
-  date = new Date();
-  today = this.date.getHours() + ':' + this.date.getMinutes();
-  sender = this.authorizationService.currentUser;
-  currUserId = this.authorizationService.userId;
-  send = '';
-  id: string;
 
-  inputState = (data) => {
+  ngOnInit(): void {
+    this.date = new Date();
+    this.minutes = this.date.getMinutes();
+    this.minutes = this.minutes > 9 ? this.minutes : '0' + this.minutes;
+    this.today = this.date.getHours() + ':' + this.minutes;
+    this.sender = this.authorizationService.currentUser;
+    this.currUserId = this.authorizationService.userId;
+  }
+
+  inputState = (data: any): void => {
     this.send = data.sendMessageInput;
-    console.log(this.send);
-  };
+  }
 
-  clearInput = () => {
+  clearInput = (): void => {
     this.send = '';
-  };
+  }
 
-  handleSendMessage = (sender, text, date, fromUser) => {
-    if (text.sendMessageInput.length > 0 && text.sendMessageInput.match(/^\s+$/) === null) {
+  handleSendMessage = (sender: string, data: any, date: string, fromUser: string): void => {
+    if (data.sendMessageInput.length > 0 && data.sendMessageInput.match(/^\s+$/) === null) {
       this.id = Date.now() + Math.random().toString(36).substr(2, 9);
-      this.messagesService.sendMessage(this.id, sender, text.sendMessageInput, date, fromUser);
+      this.messagesService.sendMessage(this.id, sender, data.sendMessageInput, date, fromUser);
       this.clearInput();
-      text.sendMessageInput = '';
+      data.sendMessageInput = '';
     } else {
       alert('empty message');
     }
-  };
-
-  ngOnInit() {
   }
-
 }

@@ -1,31 +1,38 @@
 import {Injectable} from '@angular/core';
-import {BehaviorSubject} from 'rxjs';
-import {element} from 'protractor';
+import {BehaviorSubject, Observable} from 'rxjs';
+
+interface INewUsers {
+  messId: string;
+  sender: string;
+  message: string;
+  date: string;
+  fromUser: string;
+}
+
 @Injectable({
   providedIn: 'root'
 })
 
 export class MessagesService {
-   theBoolean = new BehaviorSubject<boolean>(false);
-   changeBan = new BehaviorSubject<boolean>(false);
-  stat = this.theBoolean.asObservable();
-  otherMess = this.changeBan.asObservable();
+
   messIndex: number;
-  messages = (JSON.parse(localStorage.getItem('messArr'))) || [];
-  newMessage = {
-    messId: '',
-    sender: '',
-    message: '',
-    date: '',
-    fromUser: null,
-  };
+  newMessage: INewUsers;
+  messages: INewUsers[];
+  stat: Observable<boolean>;
   editableMess: string;
 
   constructor() {
-
+    this.getMessagesData();
   }
 
-  sendMessage = (id: string, Sender: string, Message: string, Date: string, currUserId: number) => {
+  theBoolean = new BehaviorSubject<boolean>(false);
+
+  getMessagesData = (): void => {
+    this.stat = this.theBoolean.asObservable();
+    this.messages = (JSON.parse(localStorage.getItem('messArr'))) || [];
+  }
+
+  sendMessage = (id: string, Sender: string, Message: string, Date: string, currUserId: string): void => {
     this.newMessage = {
       messId: id,
       sender: Sender,
@@ -35,9 +42,9 @@ export class MessagesService {
     };
     this.messages.push(this.newMessage);
     localStorage.setItem('messArr', JSON.stringify(this.messages));
-  };
+  }
 
-  deleteMessage = (messId: string, currUserId: string) => {
+  deleteMessage = (messId: string): void => {
     const del = this.messages.find(id => messId === id.messId);
     const currentUserId = localStorage.getItem('id');
     const a = this.messages.findIndex(elem => elem.messId === del.messId && elem.fromUser === currentUserId);
@@ -45,24 +52,20 @@ export class MessagesService {
       this.messages.splice(a, 1);
     }
     localStorage.setItem('messArr', JSON.stringify(this.messages));
-  };
+  }
 
-  sendEditedMess = (newMess) => {
+  sendEditedMess = (newMess: string): void => {
     this.messages[this.messIndex].message = newMess;
     localStorage.setItem('messArr', JSON.stringify(this.messages));
     this.messIndex = null;
     this.getTheBoolean(false);
-  };
+  }
 
-  getTheBoolean = (bool) => {
+  getTheBoolean = (bool: boolean): void => {
     this.theBoolean.next(bool);
-  };
+  }
 
-  discardEdit = (bool) => {
-    this.changeBan.next(bool);
-  };
-
-  editMessage = (messId: string, currUserId: string) => {
+  editMessage = (messId: string, currUserId: string): void => {
     const edit = this.messages.find(id => messId === id.messId);
     this.messIndex = this.messages.findIndex(elem => elem.messId === edit.messId && elem.fromUser === currUserId);
     if (this.messIndex > -1 && messId === edit.messId) {
@@ -71,5 +74,5 @@ export class MessagesService {
     } else {
       this.getTheBoolean(false);
     }
-  };
+  }
 }
