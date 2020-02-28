@@ -11,13 +11,13 @@ import {FormControl, FormGroup} from '@angular/forms';
 
 export class SendMessageBarComponent implements OnInit {
 
-  send: string;
+  inputValue: string;
   id: string;
   date: Date;
   minutes: number | string;
-  today: string;
-  sender: string;
-  currUserId: string;
+  sendingDate: string;
+  currentUserId: string;
+  senderName: string;
 
   constructor(
     private messagesService: MessagesService,
@@ -33,25 +33,25 @@ export class SendMessageBarComponent implements OnInit {
     this.date = new Date();
     this.minutes = this.date.getMinutes();
     this.minutes = this.minutes > 9 ? this.minutes : '0' + this.minutes;
-    this.today = this.date.getHours() + ':' + this.minutes;
-    this.sender = this.authorizationService.currentUser;
-    this.currUserId = this.authorizationService.userId;
+    this.sendingDate = this.date.getHours() + ':' + this.minutes;
+    this.currentUserId = this.authorizationService.userId;
+    this.senderName = this.authorizationService.currentUser;
   }
 
   inputState = (data: any): void => {
-    this.send = data.sendMessageInput;
+    this.inputValue = data.sendMessageInput;
   }
 
   clearInput = (): void => {
-    this.send = '';
+    this.inputValue = '';
   }
 
-  handleSendMessage = (sender: string, data: any, date: string, fromUser: string): void => {
-    if (data.sendMessageInput.length > 0 && data.sendMessageInput.match(/^\s+$/) === null) {
+  handleSendMessage = (inputData: any, date: string, fromUserId: string, senderName: string): void => {
+    if (inputData.sendMessageInput.length > 0 && inputData.sendMessageInput.match(/^\s+$/) === null) {
       this.id = Date.now() + Math.random().toString(36).substr(2, 9);
-      this.messagesService.sendMessage(this.id, sender, data.sendMessageInput, date, fromUser);
+      this.messagesService.sendMessage(this.id, inputData.sendMessageInput, date, fromUserId, senderName);
       this.clearInput();
-      data.sendMessageInput = '';
+      inputData.sendMessageInput = '';
     } else {
       alert('empty message');
     }

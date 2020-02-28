@@ -14,19 +14,19 @@ interface IInputData {
 })
 
 export class MessageComponent implements AfterViewInit, OnInit {
-  @Input() sender: string;
   @Input() message: string;
   @Input() date: string;
   @Input() messId: string;
   @Input() deleteMessage: string;
-  @Input() currUserId: string;
-  @Input() fromUserId: string;
+  @Input() currentUserId: string;
+  @Input() userId: string;
+  @Input() senderName: string;
 
   container: HTMLElement;
   editStatus: boolean;
   check: Subscription;
   otherMess: boolean;
-  mess: string;
+  messageText: string;
 
   constructor(
     private messagesService: MessagesService,
@@ -46,18 +46,18 @@ export class MessageComponent implements AfterViewInit, OnInit {
     this.container.scrollTop = this.container.scrollHeight;
   }
 
-  handleEditMessage = (messId: string, currUserId: string, message: string): void => {
+  handleEditMessage = (messId: string, message: string): void => {
     this.otherMess = true;
     this.check = this.messagesService.stat.subscribe(status => this.editStatus = status);
-    this.mess = message;
-    this.messagesService.editMessage(messId, currUserId);
+    this.messageText = message;
+    this.messagesService.editMessage(messId);
   }
 
   handleSendEditedMess = (inputData: IInputData): void => {
-    inputData.editMessageInput = this.mess;
+    inputData.editMessageInput = this.messageText;
     if (typeof inputData.editMessageInput !== undefined &&
       inputData.editMessageInput !== '' && inputData.editMessageInput.match(/^\s+$/) === null) {
-      this.messagesService.sendEditedMess(this.mess);
+      this.messagesService.sendEditedMess(this.messageText);
       this.check.unsubscribe();
     } else {
       alert('Empty message');
@@ -66,11 +66,11 @@ export class MessageComponent implements AfterViewInit, OnInit {
   }
 
   clearInput = (): void => {
-    this.mess = '';
+    this.messageText = '';
   }
 
   inputState = (inputData: IInputData): void => {
     console.log('data', inputData);
-    this.mess = inputData.editMessageInput;
+    this.messageText = inputData.editMessageInput;
   }
 }
