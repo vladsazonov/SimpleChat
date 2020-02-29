@@ -41,7 +41,7 @@ export class AuthorizationService {
         localStorage.setItem('authStatus', 'authed');
         this.currentUserName = localStorage.getItem('login');
         this.userId = localStorage.getItem('id');
-        this.router.navigateByUrl('/home');
+        this.router.navigateByUrl('/');
       }
     }
   }

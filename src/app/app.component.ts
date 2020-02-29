@@ -15,7 +15,7 @@ export class AppComponent implements OnInit {
     private router: Router,
   ) {
     if (localStorage.getItem('authStatus') === 'authed') {
-      this.router.navigateByUrl('/home');
+      this.router.navigateByUrl('/');
     }
   }
 

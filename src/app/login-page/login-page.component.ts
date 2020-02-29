@@ -23,7 +23,7 @@ export class LoginPageComponent implements OnInit {
 
   ngOnInit(): void {
     if (localStorage.getItem('authStatus') === 'authed') {
-      this.router.navigate(['/home']);
+      this.router.navigate(['/']);
     }
   }
 }
