@@ -32,7 +32,7 @@ export class AuthorizationService {
     this.users = (JSON.parse(localStorage.getItem('users'))) || [];
   }
 
-  public isLogin() {
+  public isUserAuthenticated() {
     return localStorage.getItem('authStatus') === 'authed';
   }
 
