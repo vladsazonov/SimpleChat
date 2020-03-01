@@ -8,6 +8,7 @@
   left: 0;
   background-color: #fafafa;
 }
+
 .backElement {
   height: 311px;
   background-color: #2f9ae1;
@@ -17,6 +18,7 @@
   left: 0;
   z-index: -1;
 }
+
 .loginModal {
   display: flex;
   justify-content: center;
@@ -24,6 +26,7 @@
   height: 100%;
   border-radius: 10px;
 }
+
 .paper {
   position: absolute;
   width: 600px;
@@ -31,6 +34,7 @@
   box-shadow: 0 0 22px 0 rgba(0, 0, 0, 0.17);
   border-radius: 10px 10px 20px 20px;
 }
+
 .paperContent {
   padding: 30px;
   border-radius: 20px;
@@ -41,46 +45,52 @@
   right: 0;
   bottom: 0;
 }
+
 .header {
   background-color: #0076c4;
-  border-radius: 10px 10px 0 0 ;
+  border-radius: 10px 10px 0 0;
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
 }
+
 .headerName {
-  padding : 30px;
+  padding: 30px;
   color: #fff;
   margin: 0;
 }
-.signInText {
 
-}
 .mat-display-1.mat-display-1 {
   color: #545454;
-  font: 500 31px/40px Roboto,"Helvetica Neue",sans-serif;
+  font: 500 31px/40px Roboto, 'Helvetica Neue', sans-serif;
   margin: 0;
 }
+
 .loginInputs {
   margin-top: 40px;
 }
+
 .inputIcon {
   color: #9e9e9e;
 }
+
 .fullWidth {
   width: 100%;
 }
+
 .signInButton {
   width: 100%;
   margin-top: 50px;
   background-color: #0076c4;
   color: #fff;
 }
+
 .signLink {
   color: #7e7e7e;
   align-self: center;
 }
+
 .mat-button.mat-button {
   margin-top: 10px;
 }

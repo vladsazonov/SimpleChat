@@ -14,7 +14,7 @@ export class RegistrationPageComponent {
     private authorizationService: AuthorizationService
   ) { }
 
-  registerForm = new FormGroup({
+  public registerForm = new FormGroup({
     newLogin: new FormControl(''),
     newPassword: new FormControl(''),
   });

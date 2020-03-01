@@ -14,7 +14,7 @@ export class HomeComponent implements OnInit {
   ) {
   }
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     if (localStorage.getItem('authStatus') === 'unAuthed') {
       this.router.navigate(['/login']);
     }

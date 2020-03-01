@@ -9,7 +9,7 @@ import {Router} from '@angular/router';
 
 export class AppComponent implements OnInit {
 
-  title = 'SimpleChat';
+  public title = 'SimpleChat';
 
   constructor(
     private router: Router,
@@ -19,7 +19,7 @@ export class AppComponent implements OnInit {
     }
   }
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     if (localStorage.login === undefined) {
       localStorage.setItem('login', '');
       if (localStorage.password === undefined) {

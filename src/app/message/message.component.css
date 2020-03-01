@@ -3,6 +3,7 @@
   padding: 20px 0;
   align-items: center;
 }
+
 .avatar {
   border-radius: 0;
   width: 50px;
@@ -13,30 +14,37 @@
   justify-content: center;
   margin-right: 35px;
 }
+
 .avatarIco {
-  color: white;
+  color: #fff;
 }
+
 .author {
   margin-bottom: 7px;
-  font: 500 18px/28px Roboto,"Helvetica Neue",sans-serif;
-  color: #444444;
+  font: 500 18px/28px Roboto, 'Helvetica Neue', sans-serif;
+  color: #444;
 }
+
 .date {
-  margin:  0 0 0 auto;
+  margin: 0 0 0 auto;
   color: #cdcdcd;
 }
+
 .message {
   margin: 0;
   color: #7e7e7e;
   white-space: pre-wrap;
   word-break: break-all;
 }
+
 .messageContainer {
   max-width: 600px;
 }
+
 .closeIco {
   color: #7e7e7e;
 }
+
 .deleteButton {
   cursor: pointer;
   width: 28px;
@@ -45,32 +53,37 @@
   justify-content: center;
   align-items: center;
 }
+
 .deleteButton:hover {
   background-color: rgba(2, 104, 118, 0.15);
   transition-duration: 0.2s;
-  border-radius: 50%;;
+  border-radius: 50%;
 }
+
 .input {
   background-color: #a4c9ce;
-  color: white;
+  color: #fff;
   border: 0;
   padding: 10px;
   border-radius: 10px;
 }
+
 .input::placeholder {
-  color: white;
+  color: #fff;
 }
+
 .sendButton {
   background-color: unset;
   border: 0;
   cursor: pointer;
 }
+
 .editMessageForm {
   display: flex;
   align-items: center;
 }
-div[disabled]
-{
+
+div[disabled] {
   pointer-events: none;
   opacity: 0.7;
 }

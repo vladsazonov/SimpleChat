@@ -9,6 +9,7 @@
   align-items: center;
   padding: 0 50px;
 }
+
 .input {
   resize: none;
   overflow: auto;
@@ -20,9 +21,10 @@
   font-size: 1.3rem;
   width: 100%;
 }
+
 .input::placeholder {
   color: #b2b2b2;
-  font-family: Roboto,"Helvetica Neue",sans-serif;
+  font-family: Roboto, 'Helvetica Neue', sans-serif;
   margin-top: 10px;
 }
 
@@ -30,11 +32,8 @@
   color: #8d8d8d;
 }
 
-::-ms-input-placeholder {
-  color: #8d8d8d;
-}
 .sendButton {
-  color: #ffffff;
+  color: #fff;
   margin-left: auto;
   align-self: center;
   background-color: #1e89d0;
@@ -43,27 +42,32 @@
   padding: 0;
   border-radius: 0;
 }
+
 .sendButton:hover {
   background-color: #0b58d0;
 }
+
 .sendButton:disabled {
   background-color: rgb(164, 164, 164);
   cursor: not-allowed;
 }
+
 .fixButton {
   padding: 0;
 }
+
 .sendMessageForm {
   display: flex;
   width: 100%;
   align-items: center;
 }
+
 .sendIcon {
   font-size: 30px;
   width: 30px;
   height: 30px;
 }
+
 .inputIcon {
   color: #d7d5d5;
 }
-

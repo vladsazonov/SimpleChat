@@ -10,8 +10,8 @@ import {IMessage} from '../models/message';
 })
 
 export class ChatWindowComponent implements OnInit {
-  messages: IMessage[];
-  currentUserName: string;
+  public messages: IMessage[];
+  public currentUserName: string;
 
   constructor(
     private messagesService: MessagesService,
@@ -19,7 +19,7 @@ export class ChatWindowComponent implements OnInit {
   ) {
   }
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     this.messages = this.messagesService.messages;
     this.currentUserName = this.authorizationService.currentUserName;
   }
