@@ -1,5 +1,7 @@
-export class Message {
-  id: number;
-  text: string;
-  date: Date;
+export interface IMessage {
+  messId: string;
+  message: string;
+  date: string;
+  userId: string;
+  senderName: string;
 }

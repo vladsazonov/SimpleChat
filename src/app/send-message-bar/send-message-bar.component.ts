@@ -11,6 +11,14 @@ import {FormControl, FormGroup} from '@angular/forms';
 
 export class SendMessageBarComponent implements OnInit {
 
+  inputValue: string;
+  id: string;
+  date: Date;
+  minutes: number;
+  sendingDate: string;
+  currentUserId: string;
+  senderName: string;
+
   constructor(
     private messagesService: MessagesService,
     private authorizationService: AuthorizationService,
@@ -20,34 +28,31 @@ export class SendMessageBarComponent implements OnInit {
   sendMessageForm = new FormGroup({
     sendMessageInput: new FormControl(''),
   });
-  date = new Date();
-  today = this.date.getHours() + ':' + this.date.getMinutes();
-  sender = this.authorizationService.currentUser;
-  currUserId = this.authorizationService.userId;
-  send = '';
-  id: string;
 
-  inputState = (data) => {
-    this.send = data.sendMessageInput;
-    console.log(this.send);
-  };
+  ngOnInit(): void {
+    this.date = new Date();
+    this.minutes = this.date.getMinutes();
+    this.sendingDate = this.date.getHours() + ':' + (this.minutes > 9 ? this.minutes.toString() : '0' + this.minutes.toString());
+    this.currentUserId = this.authorizationService.userId;
+    this.senderName = this.authorizationService.currentUserName;
+  }
 
-  clearInput = () => {
-    this.send = '';
-  };
+  inputState(data: any): void {
+    this.inputValue = data.sendMessageInput;
+  }
 
-  handleSendMessage = (sender, text, date, fromUser) => {
-    if (text.sendMessageInput.length > 0 && text.sendMessageInput.match(/^\s+$/) === null) {
+  clearInput(): void {
+    this.inputValue = '';
+  }
+
+  handleSendMessage(inputData: any, date: string, fromUserId: string, senderName: string): void {
+    if (inputData.sendMessageInput.length > 0 && inputData.sendMessageInput.match(/^\s+$/) === null) {
       this.id = Date.now() + Math.random().toString(36).substr(2, 9);
-      this.messagesService.sendMessage(this.id, sender, text.sendMessageInput, date, fromUser);
+      this.messagesService.sendMessage(this.id, inputData.sendMessageInput, date, fromUserId, senderName);
       this.clearInput();
-      text.sendMessageInput = '';
+      inputData.sendMessageInput = '';
     } else {
       alert('empty message');
     }
-  };
-
-  ngOnInit() {
   }
-
 }

@@ -8,17 +8,18 @@ import {Router} from '@angular/router';
 })
 
 export class AppComponent implements OnInit {
+
+  title = 'SimpleChat';
+
   constructor(
     private router: Router,
   ) {
     if (localStorage.getItem('authStatus') === 'authed') {
-      this.router.navigateByUrl('/home');
+      this.router.navigateByUrl('/');
     }
   }
 
-  title = 'SimpleChat';
-
-  ngOnInit() {
+  ngOnInit(): void {
     if (localStorage.login === undefined) {
       localStorage.setItem('login', '');
       if (localStorage.password === undefined) {
