@@ -14,7 +14,6 @@ export class LoginGuard implements CanActivate {
   }
 
   public canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
-    console.log('parent', state.url);
     if (this.authorizationService.isLogin()) {
       this.router.navigate(['/home']);
       return false;
