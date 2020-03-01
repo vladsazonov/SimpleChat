@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router} from '@angular/router';
 import {AuthorizationService} from '../services/authorization.service';
 
@@ -13,13 +13,13 @@ export class RegistrationGuard implements CanActivate {
   ) {
   }
 
- public canActivate(
+  public canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): boolean {
     if (this.authorizationService.isUserAuthenticated()) {
       this.router.navigate(['/home']);
       return false;
     }
-   return true;
- }
+    return true;
+  }
 }
