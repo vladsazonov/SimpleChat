@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {Router} from '@angular/router';
+import {AuthorizationService} from './services/authorization.service';
 
 @Component({
   selector: 'app-root',
@@ -12,31 +12,11 @@ export class AppComponent implements OnInit {
   public title = 'SimpleChat';
 
   constructor(
-    private router: Router,
+    private authorizationService: AuthorizationService
   ) {
-    if (localStorage.getItem('authStatus') === 'authed') {
-      this.router.navigateByUrl('/');
-    }
   }
 
   public ngOnInit(): void {
-    if (localStorage.login === undefined) {
-      localStorage.setItem('login', '');
-      if (localStorage.password === undefined) {
-        localStorage.setItem('password', '');
-        if (localStorage.id === undefined) {
-          localStorage.setItem('id', 'null');
-          if (localStorage.authStatus === undefined) {
-            localStorage.setItem('authStatus', 'unAuthed');
-            if (localStorage.messArr === undefined) {
-              localStorage.setItem('messArr', 'null');
-              if (localStorage.users === undefined) {
-                localStorage.setItem('users', '[]');
-              }
-            }
-          }
-        }
-      }
-    }
+    this.authorizationService.checkLocalstorage();
   }
 }

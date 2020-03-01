@@ -1,6 +1,6 @@
 import {Component, OnInit, Input, AfterViewInit} from '@angular/core';
-import {MessagesService} from '../service/messages.service';
-import {AuthorizationService} from '../service/authorization.service';
+import {MessagesService} from '../services/messages.service';
+import {AuthorizationService} from '../services/authorization.service';
 import {FormControl, FormGroup} from '@angular/forms';
 import {Subscription} from 'rxjs';
 
