@@ -4,7 +4,7 @@ import {Routes, RouterModule} from '@angular/router';
 import {HomeComponent} from './home/home.component';
 import {LoginPageComponent} from './login-page/login-page.component';
 import {RegistrationPageComponent} from './registration-page/registration-page.component';
-import {AuthGuard, LoginGuard, RegistrationGuard} from './guards/auth.guard';
+import {AuthGuard, LoginGuard} from './guards/auth.guard';
 
 const routes: Routes = [
   {
@@ -15,7 +15,7 @@ const routes: Routes = [
   {
     path: 'home',
     component: HomeComponent,
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard],
   },
   {
     path: 'login',
@@ -25,7 +25,7 @@ const routes: Routes = [
   {
     path: 'registration',
     component: RegistrationPageComponent,
-    canActivate: [RegistrationGuard]
+    canActivate: [LoginGuard]
   },
   {
     path: '**',
