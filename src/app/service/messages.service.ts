@@ -8,23 +8,23 @@ import {IMessage} from '../models/message';
 
 export class MessagesService {
 
-  messIndex: number;
-  newMessage: IMessage;
-  messages: IMessage[];
-  stat: Observable<boolean>;
+  public messIndex: number;
+  public newMessage: IMessage;
+  public messages: IMessage[];
+  public stat: Observable<boolean>;
 
   constructor() {
     this.getMessagesData();
   }
 
-  theBoolean = new BehaviorSubject<boolean>(false);
+  public theBoolean = new BehaviorSubject<boolean>(false);
 
-  getMessagesData(): void {
+  public getMessagesData(): void {
     this.stat = this.theBoolean.asObservable();
     this.messages = (JSON.parse(localStorage.getItem('messArr'))) || [];
   }
 
-  sendMessage(id: string, Message: string, Date: string, currentUserId: string, SenderName: string): void {
+  public sendMessage(id: string, Message: string, Date: string, currentUserId: string, SenderName: string): void {
     this.newMessage = {
       messId: id,
       message: Message,
@@ -36,7 +36,7 @@ export class MessagesService {
     localStorage.setItem('messArr', JSON.stringify(this.messages));
   }
 
-  deleteMessage(messId: string): void {
+  public deleteMessage(messId: string): void {
     const deletedMessage = this.messages.find(id => messId === id.messId);
     const currentUserId = localStorage.getItem('id');
     const deletedMessageIndex = this.messages.findIndex(elem => elem.messId === deletedMessage.messId && elem.userId === currentUserId);
@@ -46,11 +46,11 @@ export class MessagesService {
     localStorage.setItem('messArr', JSON.stringify(this.messages));
   }
 
-  getTheBoolean(bool: boolean): void {
+  public getTheBoolean(bool: boolean): void {
     this.theBoolean.next(bool);
   }
 
-  editMessage(messId: string): void {
+  public editMessage(messId: string): void {
     const findedMessage = this.messages.find(id => messId === id.messId);
     this.messIndex = this.messages.findIndex(elem => elem.messId === findedMessage.messId);
     if (this.messIndex > -1 && messId === findedMessage.messId) {
@@ -60,7 +60,7 @@ export class MessagesService {
     }
   }
 
-  sendEditedMess(newMessage: string): void {
+  public sendEditedMess(newMessage: string): void {
     this.messages[this.messIndex].message = newMessage;
     localStorage.setItem('messArr', JSON.stringify(this.messages));
     this.messIndex = null;

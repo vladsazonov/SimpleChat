@@ -16,12 +16,12 @@ export class LoginPageComponent implements OnInit {
   ) {
   }
 
-  loginForm = new FormGroup({
+  public loginForm = new FormGroup({
     login: new FormControl(''),
     password: new FormControl(''),
   });
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     if (localStorage.getItem('authStatus') === 'authed') {
       this.router.navigate(['/']);
     }

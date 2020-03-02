@@ -8,14 +8,14 @@ import {AuthorizationService} from '../service/authorization.service';
 })
 
 export class ChatNavBarComponent implements OnInit {
-  avatarSymbol: string;
+  public avatarSymbol: string;
 
   constructor(
     private authorizationService: AuthorizationService
   ) {
   }
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     this.avatarSymbol = this.authorizationService.currentUserName[0].toUpperCase();
   }
 }

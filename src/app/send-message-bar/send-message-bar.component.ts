@@ -11,13 +11,13 @@ import {FormControl, FormGroup} from '@angular/forms';
 
 export class SendMessageBarComponent implements OnInit {
 
-  inputValue: string;
-  id: string;
-  date: Date;
-  minutes: number;
-  sendingDate: string;
-  currentUserId: string;
-  senderName: string;
+  public inputValue: string;
+  public id: string;
+  public date: Date;
+  public minutes: number;
+  public sendingDate: string;
+  public currentUserId: string;
+  public senderName: string;
 
   constructor(
     private messagesService: MessagesService,
@@ -25,11 +25,11 @@ export class SendMessageBarComponent implements OnInit {
   ) {
   }
 
-  sendMessageForm = new FormGroup({
+  public sendMessageForm = new FormGroup({
     sendMessageInput: new FormControl(''),
   });
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     this.date = new Date();
     this.minutes = this.date.getMinutes();
     this.sendingDate = this.date.getHours() + ':' + (this.minutes > 9 ? this.minutes.toString() : '0' + this.minutes.toString());
@@ -37,15 +37,15 @@ export class SendMessageBarComponent implements OnInit {
     this.senderName = this.authorizationService.currentUserName;
   }
 
-  inputState(data: any): void {
+  public inputState(data: any): void {
     this.inputValue = data.sendMessageInput;
   }
 
-  clearInput(): void {
+  public clearInput(): void {
     this.inputValue = '';
   }
 
-  handleSendMessage(inputData: any, date: string, fromUserId: string, senderName: string): void {
+  public handleSendMessage(inputData: any, date: string, fromUserId: string, senderName: string): void {
     if (inputData.sendMessageInput.length > 0 && inputData.sendMessageInput.match(/^\s+$/) === null) {
       this.id = Date.now() + Math.random().toString(36).substr(2, 9);
       this.messagesService.sendMessage(this.id, inputData.sendMessageInput, date, fromUserId, senderName);

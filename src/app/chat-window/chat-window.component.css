@@ -45,19 +45,23 @@
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
 }
+
 .mat-h3.mat-h3 {
   margin: 0 0 0 5px;
   color: #2f9ae1;
-  font: 500 16px/28px Roboto,"Helvetica Neue",sans-serif;
+  font: 500 16px/28px Roboto, 'Helvetica Neue', sans-serif;
 }
+
 .funcIcon {
   color: #2f9ae1;
 }
+
 .funcBlock {
   display: flex;
   align-items: center;
-  margin-left: auto
+  margin-left: auto;
 }
+
 .messageButton {
   background-color: #69c836;
   border-radius: 50%;
@@ -67,7 +71,8 @@
   z-index: 1;
   box-shadow: 0 2px 7px 0 rgba(0, 0, 0, 0.34);
 }
+
 .messIcon {
   padding: 20px;
-  color: white;
+  color: #fff;
 }

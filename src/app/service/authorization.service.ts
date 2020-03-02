@@ -13,11 +13,11 @@ interface INewUser {
 
 export class AuthorizationService {
 
-  authStatus: string;
-  currentUserName: string;
-  userId: string;
-  users: INewUser[];
-  newUser: INewUser;
+  public authStatus: string;
+  public currentUserName: string;
+  public userId: string;
+  public users: INewUser[];
+  public newUser: INewUser;
 
   constructor(
     private router: Router,
@@ -25,14 +25,15 @@ export class AuthorizationService {
     this.getAuthorizationData();
   }
 
-  getAuthorizationData(): void {
-    this.authStatus = 'unAuthed';
+  public getAuthorizationData(): void {
+    this.authStatus = localStorage.getItem('authStatus');
+    console.log(this.authStatus);
     this.currentUserName = localStorage.getItem('login') || 'null';
     this.userId = localStorage.getItem('id');
     this.users = (JSON.parse(localStorage.getItem('users'))) || [];
   }
 
-  pushAuthData(login: string, password: string): void {
+  public pushAuthData(login: string, password: string): void {
     for (const user of this.users) {
       if (login === user.login && password === user.password) {
         localStorage.setItem('id', user.id);
@@ -46,7 +47,7 @@ export class AuthorizationService {
     }
   }
 
-  pushRegData(Login: string, Password: string): void {
+  public pushRegData(Login: string, Password: string): void {
     const isUserExists = this.users.find(user => user.login === Login);
     if (!isUserExists) {
       if (Login && Password) {
@@ -65,7 +66,7 @@ export class AuthorizationService {
     }
   }
 
-  unAuth(): void {
+  public unAuth(): void {
     localStorage.removeItem('id');
     localStorage.removeItem('login');
     localStorage.removeItem('password');

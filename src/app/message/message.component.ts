@@ -16,20 +16,20 @@ interface IInputData {
 
 export class MessageComponent implements AfterViewInit, OnInit {
 
-  currentUserId: string;
+  public currentUserId: string;
 
-  @Input() message: string;
-  @Input() date: string;
-  @Input() messId: string;
-  @Input() deleteMessage: string;
-  @Input() userId: string;
-  @Input() senderName: string;
+  @Input() public message: string;
+  @Input() public date: string;
+  @Input() public messId: string;
+  @Input() public deleteMessage: string;
+  @Input() public userId: string;
+  @Input() public senderName: string;
 
-  container: HTMLElement;
-  editStatus: boolean;
-  check: Subscription;
-  otherMess: boolean;
-  messageText: string;
+  public container: HTMLElement;
+  public editStatus: boolean;
+  public check: Subscription;
+  public otherMess: boolean;
+  public messageText: string;
 
   constructor(
     private messagesService: MessagesService,
@@ -37,28 +37,28 @@ export class MessageComponent implements AfterViewInit, OnInit {
   ) {
   }
 
-  editMessageForm = new FormGroup({
+  public editMessageForm = new FormGroup({
     editMessageInput: new FormControl(''),
   });
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     this.messagesService.stat.subscribe(status => this.otherMess = status);
     this.currentUserId = this.authorizationService.userId;
   }
 
-  ngAfterViewInit(): void {
+  public ngAfterViewInit(): void {
     this.container = document.getElementById('msgContainer');
     this.container.scrollTop = this.container.scrollHeight;
   }
 
-  handleEditMessage(messId: string, message: string): void {
+  public handleEditMessage(messId: string, message: string): void {
     this.otherMess = true;
     this.check = this.messagesService.stat.subscribe(status => this.editStatus = status);
     this.messageText = message;
     this.messagesService.editMessage(messId);
   }
 
-  handleSendEditedMess(inputData: IInputData): void {
+  public handleSendEditedMess(inputData: IInputData): void {
     inputData.editMessageInput = this.messageText;
     if (typeof inputData.editMessageInput !== undefined &&
       inputData.editMessageInput !== '' && inputData.editMessageInput.match(/^\s+$/) === null) {
@@ -70,11 +70,11 @@ export class MessageComponent implements AfterViewInit, OnInit {
     this.otherMess = false;
   }
 
-  clearInput(): void {
+  public clearInput(): void {
     this.messageText = '';
   }
 
-  inputState(inputData: IInputData): void {
+  public inputState(inputData: IInputData): void {
     this.messageText = inputData.editMessageInput;
   }
 }
