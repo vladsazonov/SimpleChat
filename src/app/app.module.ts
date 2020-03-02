@@ -13,7 +13,7 @@ import {ChatWindowComponent} from './chat-window/chat-window.component';
 import {MessageComponent} from './message/message.component';
 import {SendMessageBarComponent} from './send-message-bar/send-message-bar.component';
 import {ReactiveFormsModule} from '@angular/forms';
-import { RegistrationPageComponent } from './registration-page/registration-page.component';
+import {RegistrationPageComponent} from './registration-page/registration-page.component';
 
 @NgModule({
   declarations: [
