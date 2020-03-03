@@ -80,7 +80,9 @@ export class AuthorizationService {
       if (Login.match(/^\s+$/) === null && Password.match(/^\s+$/) === null) {
         this.updateUserList(this.generateUserId(), Login, Password);
         this.router.navigate(['/login']);
-      } else { alert('Некорректный логин или пароль'); }
+      } else {
+        alert('Некорректный логин или пароль');
+      }
     } else {
       alert('Имя пользователя занято');
     }
