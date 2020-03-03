@@ -28,12 +28,12 @@ export class AuthorizationService {
   public getAuthorizationData(): void {
     this.authStatus = localStorage.getItem('authStatus');
     this.currentUserName = localStorage.getItem('login') || 'null';
-    this.userId = localStorage.getItem('id');
+    this.userId = localStorage.getItem('id') || 'null';
     this.users = (JSON.parse(localStorage.getItem('users'))) || [];
   }
 
   public isUserAuthenticated() {
-    return localStorage.getItem('authStatus') === 'authed';
+    return this.authStatus === 'authed';
   }
 
   public checkLocalstorage() {
@@ -42,11 +42,11 @@ export class AuthorizationService {
       if (localStorage.password === undefined) {
         localStorage.setItem('password', '');
         if (localStorage.id === undefined) {
-          localStorage.setItem('id', 'null');
+          localStorage.setItem('id', '');
           if (localStorage.authStatus === undefined) {
             localStorage.setItem('authStatus', 'unAuthed');
             if (localStorage.messArr === undefined) {
-              localStorage.setItem('messArr', 'null');
+              localStorage.setItem('messArr', '[]');
               if (localStorage.users === undefined) {
                 localStorage.setItem('users', '[]');
               }
@@ -58,37 +58,46 @@ export class AuthorizationService {
   }
 
   public pushAuthData(login: string, password: string): void {
-    for (const user of this.users) {
-      if (login === user.login && password === user.password) {
-        localStorage.setItem('id', user.id);
-        localStorage.setItem('login', login);
-        localStorage.setItem('password', password);
-        localStorage.setItem('authStatus', 'authed');
-        this.authStatus = localStorage.getItem('authStatus');
-        this.currentUserName = localStorage.getItem('login');
-        this.userId = localStorage.getItem('id');
-        this.router.navigate(['/home']);
-      }
+    const isUserExists = this.users.find(user => login === user.login && password === user.password);
+    if (isUserExists && this.users.length > 0) {
+      localStorage.setItem('id', isUserExists.id);
+      localStorage.setItem('login', login);
+      localStorage.setItem('password', password);
+      localStorage.setItem('authStatus', 'authed');
+      this.currentUserName = localStorage.getItem('login');
+      this.userId = localStorage.getItem('id');
+      this.users = (JSON.parse(localStorage.getItem('users')));
+      this.authStatus = localStorage.getItem('authStatus');
+      this.router.navigate(['/home']);
+    } else {
+      alert('неверный логин или пароль');
     }
   }
 
   public pushRegData(Login: string, Password: string): void {
     const isUserExists = this.users.find(user => user.login === Login);
     if (!isUserExists) {
-      if (Login && Password) {
-        const userId = Date.now() + Math.random().toString(36).substr(2, 9);
-        this.newUser = {
-          id: userId,
-          login: Login,
-          password: Password,
-        };
-        this.users.push(this.newUser);
-        localStorage.setItem('users', JSON.stringify(this.users));
+      if (Login.match(/^\s+$/) === null && Password.match(/^\s+$/) === null) {
+        this.updateUserList(this.generateUserId(), Login, Password);
         this.router.navigate(['/login']);
-      }
+      } else { alert('Некорректный логин или пароль'); }
     } else {
       alert('Имя пользователя занято');
     }
+  }
+
+  public generateUserId(): string {
+    return Date.now() + Math.random().toString(36).substr(2, 9);
+  }
+
+  public updateUserList(userId: string, Login: string, Password: string): void {
+    this.newUser = {
+      id: userId,
+      login: Login,
+      password: Password,
+    };
+    this.users.push(this.newUser);
+    localStorage.setItem('users', JSON.stringify(this.users));
   }
 
   public unAuth(): void {
