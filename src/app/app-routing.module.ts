@@ -30,7 +30,7 @@ const routes: Routes = [
   },
   {
     path: '**',
-    redirectTo: 'login',
+    redirectTo: 'login'
   }
 ];
 
@@ -38,7 +38,7 @@ const routes: Routes = [
   declarations: [],
   imports: [
     RouterModule.forRoot(routes),
-    CommonModule,
+    CommonModule
   ],
   exports: [
     RouterModule
