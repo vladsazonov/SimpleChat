@@ -25,8 +25,8 @@ export class MessageComponent implements AfterViewInit, OnInit, OnDestroy {
   @Input() public senderName: string;
 
   public container: HTMLElement;
-  public editStatusSubscription: Subscription;
-  public otherMessSubscription: Subscription;
+  public editStatusSubscription$: Subscription;
+  public otherMessSubscription$: Subscription;
   public editStatus: boolean;
   public otherMess: boolean;
   public messageText: string;
@@ -43,7 +43,7 @@ export class MessageComponent implements AfterViewInit, OnInit, OnDestroy {
   });
 
   public ngOnInit(): void {
-    this.otherMessSubscription = this.messagesService.getEditStatus().pipe(map(
+    this.otherMessSubscription$ = this.messagesService.getEditStatus().pipe(map(
     status => this.otherMess = status
   )).subscribe();
     this.currentUserId = this.authorizationService.userId;
@@ -55,12 +55,12 @@ export class MessageComponent implements AfterViewInit, OnInit, OnDestroy {
   }
 
   public ngOnDestroy(): void {
-   this.otherMessSubscription.unsubscribe();
+   this.otherMessSubscription$.unsubscribe();
   }
 
   public handleEditMessage(messId: string, message: string): void {
     this.otherMess = true;
-    this.editStatusSubscription = this.messagesService.getEditStatus().subscribe(status => this.editStatus = status);
+    this.editStatusSubscription$ = this.messagesService.getEditStatus().subscribe(status => this.editStatus = status);
     this.messageText = message;
     this.messagesService.editMessage(messId);
   }
@@ -70,7 +70,7 @@ export class MessageComponent implements AfterViewInit, OnInit, OnDestroy {
     if (typeof inputData.editMessageInput !== undefined && inputData.editMessageInput !== '' &&
       inputData.editMessageInput.match(/^\s+$/) === null) {
       this.messagesService.sendEditedMess(this.messageText);
-      this.editStatusSubscription.unsubscribe();
+      this.editStatusSubscription$.unsubscribe();
     } else {
       alert('Empty message');
     }
