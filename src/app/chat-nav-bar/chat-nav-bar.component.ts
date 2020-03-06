@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {AuthorizationService} from '../service/authorization.service';
+import {AuthorizationService} from '../services/authorization.service';
 
 @Component({
   selector: 'app-chat-nav-bar',

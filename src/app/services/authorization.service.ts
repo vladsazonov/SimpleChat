@@ -27,10 +27,34 @@ export class AuthorizationService {
 
   public getAuthorizationData(): void {
     this.authStatus = localStorage.getItem('authStatus');
-    console.log(this.authStatus);
     this.currentUserName = localStorage.getItem('login') || 'null';
     this.userId = localStorage.getItem('id');
     this.users = (JSON.parse(localStorage.getItem('users'))) || [];
+  }
+
+  public isUserAuthenticated() {
+    return localStorage.getItem('authStatus') === 'authed';
+  }
+
+  public checkLocalstorage() {
+    if (localStorage.login === undefined) {
+      localStorage.setItem('login', '');
+      if (localStorage.password === undefined) {
+        localStorage.setItem('password', '');
+        if (localStorage.id === undefined) {
+          localStorage.setItem('id', 'null');
+          if (localStorage.authStatus === undefined) {
+            localStorage.setItem('authStatus', 'unAuthed');
+            if (localStorage.messArr === undefined) {
+              localStorage.setItem('messArr', 'null');
+              if (localStorage.users === undefined) {
+                localStorage.setItem('users', '[]');
+              }
+            }
+          }
+        }
+      }
+    }
   }
 
   public pushAuthData(login: string, password: string): void {
@@ -40,9 +64,10 @@ export class AuthorizationService {
         localStorage.setItem('login', login);
         localStorage.setItem('password', password);
         localStorage.setItem('authStatus', 'authed');
+        this.authStatus = localStorage.getItem('authStatus');
         this.currentUserName = localStorage.getItem('login');
         this.userId = localStorage.getItem('id');
-        this.router.navigateByUrl('/');
+        this.router.navigate(['/home']);
       }
     }
   }
@@ -59,7 +84,7 @@ export class AuthorizationService {
         };
         this.users.push(this.newUser);
         localStorage.setItem('users', JSON.stringify(this.users));
-        this.router.navigateByUrl('/login');
+        this.router.navigate(['/login']);
       }
     } else {
       alert('Имя пользователя занято');
@@ -71,6 +96,7 @@ export class AuthorizationService {
     localStorage.removeItem('login');
     localStorage.removeItem('password');
     localStorage.setItem('authStatus', 'unAuthed');
-    this.router.navigateByUrl('/login');
+    this.authStatus = localStorage.getItem('authStatus');
+    this.router.navigate(['/login']);
   }
 }

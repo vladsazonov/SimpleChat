@@ -1,5 +1,5 @@
-import {Component, OnInit} from '@angular/core';
-import {AuthorizationService} from '../service/authorization.service';
+import {Component} from '@angular/core';
+import {AuthorizationService} from '../services/authorization.service';
 import {Router} from '@angular/router';
 import {FormGroup, FormControl} from '@angular/forms';
 
@@ -8,7 +8,7 @@ import {FormGroup, FormControl} from '@angular/forms';
   templateUrl: './login-page.component.html',
   styleUrls: ['./login-page.component.css']
 })
-export class LoginPageComponent implements OnInit {
+export class LoginPageComponent {
 
   constructor(
     private router: Router,
@@ -20,10 +20,4 @@ export class LoginPageComponent implements OnInit {
     login: new FormControl(''),
     password: new FormControl(''),
   });
-
-  public ngOnInit(): void {
-    if (localStorage.getItem('authStatus') === 'authed') {
-      this.router.navigate(['/']);
-    }
-  }
 }
