@@ -7,8 +7,9 @@ import {Observable} from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class LoginGuard implements CanActivate {
 
+export class LoginGuard implements CanActivate {
+  
   constructor(
     private authorizationService: AuthorizationService,
     private router: Router,
