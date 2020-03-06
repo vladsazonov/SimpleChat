@@ -1,8 +1,9 @@
-import {Component, OnInit, Input, AfterViewInit} from '@angular/core';
+import {Component, OnInit, Input, AfterViewInit, OnDestroy} from '@angular/core';
 import {MessagesService} from '../services/messages.service';
 import {AuthorizationService} from '../services/authorization.service';
 import {FormControl, FormGroup} from '@angular/forms';
 import {Subscription} from 'rxjs';
+import {map} from 'rxjs/operators';
 
 interface IInputData {
   editMessageInput: string;
@@ -14,7 +15,7 @@ interface IInputData {
   styleUrls: ['./message.component.css']
 })
 
-export class MessageComponent implements AfterViewInit, OnInit {
+export class MessageComponent implements AfterViewInit, OnInit, OnDestroy {
 
   @Input() public message: string;
   @Input() public date: string;
@@ -24,8 +25,9 @@ export class MessageComponent implements AfterViewInit, OnInit {
   @Input() public senderName: string;
 
   public container: HTMLElement;
+  public editStatusSubscription: Subscription;
+  public otherMessSubscription: Subscription;
   public editStatus: boolean;
-  public editStatusCheck: Subscription;
   public otherMess: boolean;
   public messageText: string;
   public currentUserId: string;
@@ -41,7 +43,9 @@ export class MessageComponent implements AfterViewInit, OnInit {
   });
 
   public ngOnInit(): void {
-    this.messagesService.getEditStatus().subscribe(status => this.otherMess = status);
+    this.otherMessSubscription = this.messagesService.getEditStatus().pipe(map(
+    status => this.otherMess = status
+  )).subscribe();
     this.currentUserId = this.authorizationService.userId;
   }
 
@@ -50,9 +54,13 @@ export class MessageComponent implements AfterViewInit, OnInit {
     this.container.scrollTop = this.container.scrollHeight;
   }
 
+  public ngOnDestroy(): void {
+   this.otherMessSubscription.unsubscribe();
+  }
+
   public handleEditMessage(messId: string, message: string): void {
     this.otherMess = true;
-    this.editStatusCheck = this.messagesService.getEditStatus().subscribe(status => this.editStatus = status);
+    this.editStatusSubscription = this.messagesService.getEditStatus().subscribe(status => this.editStatus = status);
     this.messageText = message;
     this.messagesService.editMessage(messId);
   }
@@ -62,7 +70,7 @@ export class MessageComponent implements AfterViewInit, OnInit {
     if (typeof inputData.editMessageInput !== undefined && inputData.editMessageInput !== '' &&
       inputData.editMessageInput.match(/^\s+$/) === null) {
       this.messagesService.sendEditedMess(this.messageText);
-      this.editStatusCheck.unsubscribe();
+      this.editStatusSubscription.unsubscribe();
     } else {
       alert('Empty message');
     }
