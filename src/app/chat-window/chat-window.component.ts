@@ -1,6 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {MessagesService} from '../services/messages.service';
 import {IMessage} from '../models/message';
+import {Observable} from 'rxjs';
 
 @Component({
   selector: 'app-chat-window',
@@ -10,7 +11,7 @@ import {IMessage} from '../models/message';
 
 export class ChatWindowComponent implements OnInit {
 
-  public messages: IMessage[];
+  public messages$: Observable<IMessage[]>;
 
   @Input() public userName: string;
 
@@ -20,6 +21,6 @@ export class ChatWindowComponent implements OnInit {
   }
 
   public ngOnInit(): void {
-    this.messages = this.messagesService.messages;
+    this.messages$ = this.messagesService.getMessages();
   }
 }

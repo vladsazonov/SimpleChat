@@ -23,7 +23,7 @@
 
 <div class="chatContent">
   <div class="content" id="msgContainer">
-    <app-message *ngFor="let message of messages"
+    <app-message *ngFor="let message of (messages$ | async)"
                  [messId]="message.messId"
                  [message]="message.message"
                  [date]="message.date"
