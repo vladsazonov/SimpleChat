@@ -16,12 +16,10 @@ interface INewUser {
 export class AuthorizationService {
 
   public $authStatus = new BehaviorSubject<boolean>(false);
-  public authStatus: string;
+  public $users = new BehaviorSubject<INewUser[]>([]);
   public currentUserName: string;
   public userId: string;
-  public users: INewUser[];
   public newUser: INewUser;
-  public $users = new BehaviorSubject<INewUser[]>([]);
 
   constructor(
     private router: Router,
@@ -30,13 +28,12 @@ export class AuthorizationService {
   }
 
   public getAuthorizationData(): void {
-    this.loadUsers();
-    const auth = localStorage.getItem('authStatus');
-    if (auth === 'authed') {
+    if (localStorage.getItem('authStatus') === 'authed') {
       this.$authStatus.next(true);
     }
-    this.currentUserName = localStorage.getItem('login') || 'null';
-    this.userId = localStorage.getItem('id') || 'null';
+    this.$users.next(JSON.parse(localStorage.getItem('users')) || []);
+    this.currentUserName = localStorage.getItem('login');
+    this.userId = localStorage.getItem('id');
   }
 
   public addUser(user: INewUser[]): void {
@@ -49,53 +46,37 @@ export class AuthorizationService {
     }));
   }
 
-  public loadUsers() {
-    this.$users.next(JSON.parse(localStorage.getItem('users')) || []);
-  }
-
   public checkLocalstorage() {
-    if (localStorage.login === undefined) {
-      localStorage.setItem('login', '');
-      if (localStorage.password === undefined) {
-        localStorage.setItem('password', '');
-        if (localStorage.id === undefined) {
-          localStorage.setItem('id', '');
-          if (localStorage.authStatus === undefined) {
-            localStorage.setItem('authStatus', 'unAuthed');
-            if (localStorage.messArr === undefined) {
-              localStorage.setItem('messArr', '[]');
-              if (localStorage.users === undefined) {
-                localStorage.setItem('users', '[]');
-              }
-            }
-          }
-        }
-      }
+    if (localStorage.users === undefined) {
+      localStorage.setItem('users', '[]');
+    }
+    if (localStorage.messArr === undefined) {
+      localStorage.setItem('messArr', '[]');
+    }
+    if (localStorage.authStatus === undefined) {
+      localStorage.setItem('authStatus', 'unAuthed');
     }
   }
 
   public pushAuthData(login: string, password: string): void {
-    if (this.$users.value.length > 0) {
-      const isUserExists = this.$users.value.find(user => login === user.login && password === user.password);
-      if (isUserExists) {
-        localStorage.setItem('id', isUserExists.id);
-        localStorage.setItem('login', login);
-        localStorage.setItem('password', password);
-        localStorage.setItem('authStatus', 'authed');
-        this.currentUserName = isUserExists.login;
-        this.userId = isUserExists.id;
-        this.$authStatus.next(true);
-        this.router.navigate(['/home']);
-      } else {
-        alert('неверный логин или пароль');
-      }
+    const isUserExists = this.$users.value.find(user => login === user.login && password === user.password);
+    if (isUserExists) {
+      localStorage.setItem('id', isUserExists.id);
+      localStorage.setItem('login', login);
+      localStorage.setItem('password', password);
+      localStorage.setItem('authStatus', 'authed');
+      this.currentUserName = isUserExists.login;
+      this.userId = isUserExists.id;
+      this.$authStatus.next(true);
+      this.router.navigate(['/home']);
     } else {
-      alert('Создайте пользователя');
+      alert('неверный логин или пароль');
     }
   }
 
   public pushRegData(Login: string, Password: string): void {
-    if (this.$users.value.length === 0) {
+    const isUserExists = this.$users.value.find(user => user.login === Login);
+    if (!isUserExists) {
       if (Login.match(/^\s+$/) === null && Password.match(/^\s+$/) === null) {
         this.updateUserList(this.generateUserId(), Login, Password);
         this.router.navigate(['/login']);
@@ -103,17 +84,7 @@ export class AuthorizationService {
         alert('Некорректный логин или пароль');
       }
     } else {
-      const isUserExists = this.$users.value.find(user => user.login === Login);
-      if (!isUserExists) {
-        if (Login.match(/^\s+$/) === null && Password.match(/^\s+$/) === null) {
-          this.updateUserList(this.generateUserId(), Login, Password);
-          this.router.navigate(['/login']);
-        } else {
-          alert('Некорректный логин или пароль');
-        }
-      } else {
-        alert('Имя пользователя занято');
-      }
+      alert('Имя пользователя занято');
     }
   }
 
@@ -127,11 +98,9 @@ export class AuthorizationService {
       login: Login,
       password: Password,
     };
-    const b = this.$users.value; // TODO overwrite this code part
-    b.push(this.newUser);
-    this.addUser(b);
-    localStorage.setItem('users', JSON.stringify(b));
-
+    this.$users.value.push(this.newUser);
+    this.addUser(this.$users.value);
+    localStorage.setItem('users', JSON.stringify(this.$users.value));
   }
 
   public unAuth(): void {
