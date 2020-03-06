@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {AuthorizationService} from '../services/authorization.service';
 
 @Component({
@@ -7,17 +7,12 @@ import {AuthorizationService} from '../services/authorization.service';
   styleUrls: ['./chat-nav-bar.component.css']
 })
 
-export class ChatNavBarComponent implements OnInit {
-  public avatarSymbol: string;
+export class ChatNavBarComponent {
+
+  @Input() public avatarSymbol: string;
 
   constructor(
     private authorizationService: AuthorizationService
   ) {
   }
-
-  public ngOnInit(): void {
-    this.avatarSymbol = this.authorizationService.currentUserName[0].toUpperCase();
-  }
 }
-
-

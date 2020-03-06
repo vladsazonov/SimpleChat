@@ -1,6 +1,5 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {MessagesService} from '../services/messages.service';
-import {AuthorizationService} from '../services/authorization.service';
 import {IMessage} from '../models/message';
 
 @Component({
@@ -10,17 +9,17 @@ import {IMessage} from '../models/message';
 })
 
 export class ChatWindowComponent implements OnInit {
+
   public messages: IMessage[];
-  public currentUserName: string;
+
+  @Input() public userName: string;
 
   constructor(
     private messagesService: MessagesService,
-    private authorizationService: AuthorizationService,
   ) {
   }
 
   public ngOnInit(): void {
     this.messages = this.messagesService.messages;
-    this.currentUserName = this.authorizationService.currentUserName;
   }
 }
