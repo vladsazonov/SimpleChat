@@ -50,7 +50,7 @@ export class AuthorizationService {
   }
 
   public loadUsers() {
-    this.$users.next(JSON.parse(localStorage.getItem('users')));
+    this.$users.next(JSON.parse(localStorage.getItem('users')) || []);
   }
 
   public checkLocalstorage() {
@@ -83,6 +83,7 @@ export class AuthorizationService {
         localStorage.setItem('password', password);
         localStorage.setItem('authStatus', 'authed');
         this.currentUserName = isUserExists.login;
+        this.userId = isUserExists.id;
         this.$authStatus.next(true);
         this.router.navigate(['/home']);
       } else {
