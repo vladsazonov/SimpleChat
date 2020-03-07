@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {MessagesService} from '../services/messages.service';
-import {IMessage} from '../models/message';
+import {MessagesService} from '../../services/messages.service';
+import {IMessage} from '../../models/message';
 import {Observable} from 'rxjs';
 
 @Component({

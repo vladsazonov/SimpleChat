@@ -3,28 +3,28 @@ import {NgModule} from '@angular/core';
 import {MaterialModule} from './MaterialModule';
 import {AppComponent} from './app.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {LoginPageComponent} from './login-page/login-page.component';
+import {LoginPage} from './pages/login/login.page';
 import {AuthorizationService} from './services/authorization.service';
 import {MessagesService} from './services/messages.service';
 import {AppRoutingModule} from './app-routing.module';
-import {HomeComponent} from './home/home.component';
-import {ChatNavBarComponent} from './chat-nav-bar/chat-nav-bar.component';
-import {ChatWindowComponent} from './chat-window/chat-window.component';
-import {MessageComponent} from './message/message.component';
-import {SendMessageBarComponent} from './send-message-bar/send-message-bar.component';
+import {HomePage} from './pages/home/home.page';
+import {ChatNavBarComponent} from './components/chat-nav-bar/chat-nav-bar.component';
+import {ChatWindowComponent} from './components/chat-window/chat-window.component';
+import {MessageComponent} from './components/message/message.component';
+import {SendMessageBarComponent} from './components/send-message-bar/send-message-bar.component';
 import {ReactiveFormsModule} from '@angular/forms';
-import {RegistrationPageComponent} from './registration-page/registration-page.component';
+import {RegistrationPage} from './pages/registration/registration.page';
 
 @NgModule({
   declarations: [
     AppComponent,
-    LoginPageComponent,
-    HomeComponent,
+    LoginPage,
+    HomePage,
     ChatNavBarComponent,
     ChatWindowComponent,
     MessageComponent,
     SendMessageBarComponent,
-    RegistrationPageComponent,
+    RegistrationPage,
   ],
   imports: [
     BrowserModule,

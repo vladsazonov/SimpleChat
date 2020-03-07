@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
-import {MessagesService} from '../services/messages.service';
-import {AuthorizationService} from '../services/authorization.service';
+import {MessagesService} from '../../services/messages.service';
+import {AuthorizationService} from '../../services/authorization.service';
 import {FormControl, FormGroup} from '@angular/forms';
 
 @Component({
