@@ -3,12 +3,7 @@ import {Router} from '@angular/router';
 import {BehaviorSubject, Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {MessagesService} from './messages.service';
-
-interface INewUser {
-  id: string;
-  login: string;
-  password: string;
-}
+import {IUser} from '../models/user';
 
 @Injectable({
   providedIn: 'root'
@@ -17,10 +12,10 @@ interface INewUser {
 export class AuthorizationService {
 
   public $authStatus = new BehaviorSubject<boolean>(false);
-  public $users = new BehaviorSubject<INewUser[]>([]);
+  public $users = new BehaviorSubject<IUser[]>([]);
   public currentUserName: string;
   public userId: string;
-  public newUser: INewUser;
+  public newUser: IUser;
 
   constructor(
     private router: Router,
@@ -38,11 +33,11 @@ export class AuthorizationService {
     this.userId = localStorage.getItem('id');
   }
 
-  public addUser(user: INewUser[]): void {
+  public addUser(user: IUser[]): void {
     this.$users.next(user);
   }
 
-  public currentUser(): Observable<INewUser> {
+  public currentUser(): Observable<IUser> {
     return this.$users.pipe(map(users => {
       return users.find(user => user.login === this.currentUserName);
     }));

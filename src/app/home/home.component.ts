@@ -1,12 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {AuthorizationService} from '../services/authorization.service';
 import {Observable} from 'rxjs';
-
-interface INewUser {
-  id: string;
-  login: string;
-  password: string;
-}
+import {IUser} from '../models/user';
 
 @Component({
   selector: 'app-home',
@@ -16,7 +11,7 @@ interface INewUser {
 
 export class HomeComponent implements OnInit {
 
-  public user$: Observable<INewUser>;
+  public user$: Observable<IUser>;
 
   constructor(
     private authorizationService: AuthorizationService
