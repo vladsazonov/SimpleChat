@@ -9,7 +9,7 @@ import {Observable} from 'rxjs';
 })
 
 export class LoginGuard implements CanActivate {
-  
+
   constructor(
     private authorizationService: AuthorizationService,
     private router: Router,
