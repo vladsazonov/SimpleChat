@@ -12,7 +12,6 @@ import {FormControl, FormGroup} from '@angular/forms';
 export class SendMessageBarComponent implements OnInit {
 
   public inputValue: string;
-  public id: string;
   public date: Date;
   public minutes: number;
   public sendingDate: string;
@@ -47,8 +46,8 @@ export class SendMessageBarComponent implements OnInit {
 
   public handleSendMessage(inputData: any, date: string, fromUserId: string, senderName: string): void {
     if (inputData.sendMessageInput.length > 0 && inputData.sendMessageInput.match(/^\s+$/) === null) {
-      this.id = Date.now() + Math.random().toString(36).substr(2, 9);
-      this.messagesService.sendMessage(this.id, inputData.sendMessageInput, date, fromUserId, senderName);
+      // tslint:disable-next-line:max-line-length
+      this.messagesService.sendMessage(this.authorizationService.generateUserId(), inputData.sendMessageInput, date, fromUserId, senderName);
       this.clearInput();
       inputData.sendMessageInput = '';
     } else {
