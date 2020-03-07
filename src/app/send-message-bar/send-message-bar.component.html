@@ -8,7 +8,7 @@
            placeholder="Введите сообщение...">
     <button class="sendButton"
             mat-button [disabled]="sendMessageForm.value.sendMessageInput.length === 0"
-            (click)="handleSendMessage(sendMessageForm.value, sendingDate, currentUserId, senderName)">
+            (click)="handleSendMessage(sendMessageForm.value)">
       SEND
     </button>
   </form>
