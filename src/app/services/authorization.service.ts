@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {Router} from '@angular/router';
 import {BehaviorSubject, Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
+import {MessagesService} from './messages.service';
 
 interface INewUser {
   id: string;
@@ -23,6 +24,7 @@ export class AuthorizationService {
 
   constructor(
     private router: Router,
+    private messagesService: MessagesService
   ) {
     this.getAuthorizationData();
   }
@@ -46,7 +48,7 @@ export class AuthorizationService {
     }));
   }
 
-  public checkLocalstorage() {
+  public checkLocalstorage(): void {
     if (localStorage.users === undefined) {
       localStorage.setItem('users', '[]');
     }
@@ -109,6 +111,7 @@ export class AuthorizationService {
     localStorage.removeItem('password');
     localStorage.setItem('authStatus', 'unAuthed');
     this.$authStatus.next(false);
+    this.messagesService.$editStatus.next(false);
     this.router.navigate(['/login']);
   }
 }

@@ -2,8 +2,7 @@ import {Component, OnInit, Input, AfterViewInit, OnDestroy} from '@angular/core'
 import {MessagesService} from '../services/messages.service';
 import {AuthorizationService} from '../services/authorization.service';
 import {FormControl, FormGroup} from '@angular/forms';
-import {Subscription} from 'rxjs';
-import {map} from 'rxjs/operators';
+import {Observable, Subscription} from 'rxjs';
 
 interface IInputData {
   editMessageInput: string;
@@ -15,7 +14,7 @@ interface IInputData {
   styleUrls: ['./message.component.css']
 })
 
-export class MessageComponent implements AfterViewInit, OnInit, OnDestroy {
+export class MessageComponent implements AfterViewInit, OnInit {
 
   @Input() public message: string;
   @Input() public date: string;
@@ -26,9 +25,8 @@ export class MessageComponent implements AfterViewInit, OnInit, OnDestroy {
 
   public container: HTMLElement;
   public editStatusSubscription$: Subscription;
-  public otherMessSubscription$: Subscription;
+  public disabledMenuButton$: Observable<boolean>;
   public editStatus: boolean;
-  public otherMess: boolean;
   public messageText: string;
   public currentUserId: string;
 
@@ -43,9 +41,7 @@ export class MessageComponent implements AfterViewInit, OnInit, OnDestroy {
   });
 
   public ngOnInit(): void {
-    this.otherMessSubscription$ = this.messagesService.getEditStatus().pipe(map(
-    status => this.otherMess = status
-  )).subscribe();
+    this.disabledMenuButton$ = this.messagesService.getEditStatus();
     this.currentUserId = this.authorizationService.userId;
   }
 
@@ -54,12 +50,7 @@ export class MessageComponent implements AfterViewInit, OnInit, OnDestroy {
     this.container.scrollTop = this.container.scrollHeight;
   }
 
-  public ngOnDestroy(): void {
-   this.otherMessSubscription$.unsubscribe();
-  }
-
   public handleEditMessage(messId: string, message: string): void {
-    this.otherMess = true;
     this.editStatusSubscription$ = this.messagesService.getEditStatus().subscribe(status => this.editStatus = status);
     this.messageText = message;
     this.messagesService.editMessage(messId);
@@ -74,7 +65,6 @@ export class MessageComponent implements AfterViewInit, OnInit, OnDestroy {
     } else {
       alert('Empty message');
     }
-    this.otherMess = false;
   }
 
   public clearInput(): void {
