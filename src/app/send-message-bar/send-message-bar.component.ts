@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {MessagesService} from '../services/messages.service';
 import {AuthorizationService} from '../services/authorization.service';
 import {FormControl, FormGroup} from '@angular/forms';
@@ -9,15 +9,9 @@ import {FormControl, FormGroup} from '@angular/forms';
   styleUrls: ['./send-message-bar.component.css']
 })
 
-export class SendMessageBarComponent implements OnInit {
+export class SendMessageBarComponent {
 
   public inputValue: string;
-  public id: string;
-  public date: Date;
-  public minutes: number;
-  public sendingDate: string;
-  public currentUserId: string;
-  public senderName: string;
 
   constructor(
     private messagesService: MessagesService,
@@ -29,12 +23,10 @@ export class SendMessageBarComponent implements OnInit {
     sendMessageInput: new FormControl(''),
   });
 
-  public ngOnInit(): void {
-    this.date = new Date();
-    this.minutes = this.date.getMinutes();
-    this.sendingDate = this.date.getHours() + ':' + (this.minutes > 9 ? this.minutes.toString() : '0' + this.minutes.toString());
-    this.currentUserId = this.authorizationService.userId;
-    this.senderName = this.authorizationService.currentUserName;
+  public generateDate(): string {
+    const date = new Date();
+    const minutes = date.getMinutes();
+    return date.getHours().toString() + ':' + (minutes > 9 ? minutes.toString() : '0' + minutes.toString());
   }
 
   public inputState(data: any): void {
@@ -45,10 +37,15 @@ export class SendMessageBarComponent implements OnInit {
     this.inputValue = '';
   }
 
-  public handleSendMessage(inputData: any, date: string, fromUserId: string, senderName: string): void {
+  public handleSendMessage(inputData: any): void {
     if (inputData.sendMessageInput.length > 0 && inputData.sendMessageInput.match(/^\s+$/) === null) {
-      this.id = Date.now() + Math.random().toString(36).substr(2, 9);
-      this.messagesService.sendMessage(this.id, inputData.sendMessageInput, date, fromUserId, senderName);
+      this.messagesService.sendMessage(
+        this.authorizationService.generateUserId(),
+        inputData.sendMessageInput,
+        this.generateDate(),
+        this.authorizationService.userId,
+        this.authorizationService.currentUserName
+      );
       this.clearInput();
       inputData.sendMessageInput = '';
     } else {

@@ -1,8 +1,7 @@
 <div class="root">
- <app-chat-nav-bar></app-chat-nav-bar>
+  <app-chat-nav-bar [avatarSymbol]="(user$ | async).login"></app-chat-nav-bar>
   <div class="backElement"></div>
   <div class="homeContent">
-      <app-chat-window class="paper"></app-chat-window>
+    <app-chat-window [userName]="(user$ | async).login" class="paper"></app-chat-window>
   </div>
 </div>
-

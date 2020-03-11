@@ -17,7 +17,8 @@
   <h1 class="mat-caption date">{{date}}</h1>
 
   <div>
-    <button [disabled]="otherMess" *ngIf="currentUserId === userId" mat-icon-button [matMenuTriggerFor]="menu"
+    <button [disabled]="disabledMenuButton$ | async" *ngIf="currentUserId === userId" mat-icon-button
+            [matMenuTriggerFor]="menu"
             aria-label="menu">
       <mat-icon style="color: #b5b5b5">more_vert</mat-icon>
     </button>

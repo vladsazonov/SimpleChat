@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {AuthorizationService} from './services/authorization.service';
 
 @Component({
@@ -7,16 +7,13 @@ import {AuthorizationService} from './services/authorization.service';
   styleUrls: ['./app.component.css']
 })
 
-export class AppComponent implements OnInit {
+export class AppComponent {
 
   public title = 'SimpleChat';
 
   constructor(
     private authorizationService: AuthorizationService
   ) {
-  }
-
-  public ngOnInit(): void {
     this.authorizationService.checkLocalstorage();
   }
 }

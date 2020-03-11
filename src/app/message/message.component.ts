@@ -2,7 +2,7 @@ import {Component, OnInit, Input, AfterViewInit} from '@angular/core';
 import {MessagesService} from '../services/messages.service';
 import {AuthorizationService} from '../services/authorization.service';
 import {FormControl, FormGroup} from '@angular/forms';
-import {Subscription} from 'rxjs';
+import {Observable, Subscription} from 'rxjs';
 
 interface IInputData {
   editMessageInput: string;
@@ -16,8 +16,6 @@ interface IInputData {
 
 export class MessageComponent implements AfterViewInit, OnInit {
 
-  public currentUserId: string;
-
   @Input() public message: string;
   @Input() public date: string;
   @Input() public messId: string;
@@ -26,10 +24,11 @@ export class MessageComponent implements AfterViewInit, OnInit {
   @Input() public senderName: string;
 
   public container: HTMLElement;
+  public editStatusSubscription$: Subscription;
+  public disabledMenuButton$: Observable<boolean>;
   public editStatus: boolean;
-  public check: Subscription;
-  public otherMess: boolean;
   public messageText: string;
+  public currentUserId: string;
 
   constructor(
     private messagesService: MessagesService,
@@ -42,7 +41,7 @@ export class MessageComponent implements AfterViewInit, OnInit {
   });
 
   public ngOnInit(): void {
-    this.messagesService.stat.subscribe(status => this.otherMess = status);
+    this.disabledMenuButton$ = this.messagesService.getEditStatus();
     this.currentUserId = this.authorizationService.userId;
   }
 
@@ -52,22 +51,20 @@ export class MessageComponent implements AfterViewInit, OnInit {
   }
 
   public handleEditMessage(messId: string, message: string): void {
-    this.otherMess = true;
-    this.check = this.messagesService.stat.subscribe(status => this.editStatus = status);
+    this.editStatusSubscription$ = this.messagesService.getEditStatus().subscribe(status => this.editStatus = status);
     this.messageText = message;
     this.messagesService.editMessage(messId);
   }
 
   public handleSendEditedMess(inputData: IInputData): void {
     inputData.editMessageInput = this.messageText;
-    if (typeof inputData.editMessageInput !== undefined &&
-      inputData.editMessageInput !== '' && inputData.editMessageInput.match(/^\s+$/) === null) {
+    if (typeof inputData.editMessageInput !== undefined && inputData.editMessageInput !== '' &&
+      inputData.editMessageInput.match(/^\s+$/) === null) {
       this.messagesService.sendEditedMess(this.messageText);
-      this.check.unsubscribe();
+      this.editStatusSubscription$.unsubscribe();
     } else {
       alert('Empty message');
     }
-    this.otherMess = false;
   }
 
   public clearInput(): void {

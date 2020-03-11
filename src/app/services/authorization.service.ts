@@ -1,11 +1,9 @@
 import {Injectable} from '@angular/core';
 import {Router} from '@angular/router';
-
-interface INewUser {
-  id: string;
-  login: string;
-  password: string;
-}
+import {BehaviorSubject, Observable} from 'rxjs';
+import {map} from 'rxjs/operators';
+import {MessagesService} from './messages.service';
+import {IUser} from '../models/user';
 
 @Injectable({
   providedIn: 'root'
@@ -13,61 +11,60 @@ interface INewUser {
 
 export class AuthorizationService {
 
-  public authStatus: string;
+  public $authStatus = new BehaviorSubject<boolean>(false);
+  public $users = new BehaviorSubject<IUser[]>([]);
   public currentUserName: string;
   public userId: string;
-  public users: INewUser[];
-  public newUser: INewUser;
+  public newUser: IUser;
 
   constructor(
     private router: Router,
+    private messagesService: MessagesService
   ) {
     this.getAuthorizationData();
   }
 
   public getAuthorizationData(): void {
-    this.authStatus = localStorage.getItem('authStatus');
-    this.currentUserName = localStorage.getItem('login') || 'null';
-    this.userId = localStorage.getItem('id') || 'null';
-    this.users = (JSON.parse(localStorage.getItem('users'))) || [];
+    if (localStorage.getItem('authStatus') === 'authed') {
+      this.$authStatus.next(true);
+    }
+    this.$users.next(JSON.parse(localStorage.getItem('users')) || []);
+    this.currentUserName = localStorage.getItem('login');
+    this.userId = localStorage.getItem('id');
   }
 
-  public isUserAuthenticated() {
-    return this.authStatus === 'authed';
+  public addUser(user: IUser[]): void {
+    this.$users.next(user);
   }
 
-  public checkLocalstorage() {
-    if (localStorage.login === undefined) {
-      localStorage.setItem('login', '');
-      if (localStorage.password === undefined) {
-        localStorage.setItem('password', '');
-        if (localStorage.id === undefined) {
-          localStorage.setItem('id', '');
-          if (localStorage.authStatus === undefined) {
-            localStorage.setItem('authStatus', 'unAuthed');
-            if (localStorage.messArr === undefined) {
-              localStorage.setItem('messArr', '[]');
-              if (localStorage.users === undefined) {
-                localStorage.setItem('users', '[]');
-              }
-            }
-          }
-        }
-      }
+  public currentUser(): Observable<IUser> {
+    return this.$users.pipe(map(users => {
+      return users.find(user => user.login === this.currentUserName);
+    }));
+  }
+
+  public checkLocalstorage(): void {
+    if (localStorage.users === undefined) {
+      localStorage.setItem('users', '[]');
+    }
+    if (localStorage.messArr === undefined) {
+      localStorage.setItem('messArr', '[]');
+    }
+    if (localStorage.authStatus === undefined) {
+      localStorage.setItem('authStatus', 'unAuthed');
     }
   }
 
   public pushAuthData(login: string, password: string): void {
-    const isUserExists = this.users.find(user => login === user.login && password === user.password);
-    if (isUserExists && this.users.length > 0) {
+    const isUserExists = this.$users.value.find(user => login === user.login && password === user.password);
+    if (isUserExists) {
       localStorage.setItem('id', isUserExists.id);
       localStorage.setItem('login', login);
       localStorage.setItem('password', password);
       localStorage.setItem('authStatus', 'authed');
-      this.currentUserName = localStorage.getItem('login');
-      this.userId = localStorage.getItem('id');
-      this.users = (JSON.parse(localStorage.getItem('users')));
-      this.authStatus = localStorage.getItem('authStatus');
+      this.currentUserName = isUserExists.login;
+      this.userId = isUserExists.id;
+      this.$authStatus.next(true);
       this.router.navigate(['/home']);
     } else {
       alert('неверный логин или пароль');
@@ -75,7 +72,7 @@ export class AuthorizationService {
   }
 
   public pushRegData(Login: string, Password: string): void {
-    const isUserExists = this.users.find(user => user.login === Login);
+    const isUserExists = this.$users.value.find(user => user.login === Login);
     if (!isUserExists) {
       if (Login.match(/^\s+$/) === null && Password.match(/^\s+$/) === null) {
         this.updateUserList(this.generateUserId(), Login, Password);
@@ -98,8 +95,10 @@ export class AuthorizationService {
       login: Login,
       password: Password,
     };
-    this.users.push(this.newUser);
-    localStorage.setItem('users', JSON.stringify(this.users));
+
+    this.$users.value.push(this.newUser);
+    this.addUser(this.$users.value);
+    localStorage.setItem('users', JSON.stringify(this.$users.value));
   }
 
   public unAuth(): void {
@@ -107,7 +106,8 @@ export class AuthorizationService {
     localStorage.removeItem('login');
     localStorage.removeItem('password');
     localStorage.setItem('authStatus', 'unAuthed');
-    this.authStatus = localStorage.getItem('authStatus');
+    this.$authStatus.next(false);
+    this.messagesService.$editStatus.next(false);
     this.router.navigate(['/login']);
   }
 }
