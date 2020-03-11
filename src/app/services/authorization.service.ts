@@ -35,7 +35,9 @@ export class AuthorizationService {
     this.usersSubscription$ = this.$users.subscribe(users => {
       localStorage.setItem('users', JSON.stringify(users));
     });
-
+    this.messagesService.messagesSubscription$ = this.messagesService.$messages.subscribe(messages => {
+      localStorage.setItem('messArr', JSON.stringify(messages));
+    });
   }
 
   public currentUser(): Observable<IUser> {
