@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Router} from '@angular/router';
-import {BehaviorSubject, Observable} from 'rxjs';
+import {BehaviorSubject, Observable, Subscription} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {MessagesService} from './messages.service';
 import {IUser} from '../models/user';
@@ -15,7 +15,8 @@ export class AuthorizationService {
   public $users = new BehaviorSubject<IUser[]>([]);
   public currentUserName: string;
   public userId: string;
-  public newUser: IUser;
+  public usersSubscription$: Subscription;
+
 
   constructor(
     private router: Router,
@@ -31,10 +32,10 @@ export class AuthorizationService {
     this.$users.next(JSON.parse(localStorage.getItem('users')) || []);
     this.currentUserName = localStorage.getItem('login');
     this.userId = localStorage.getItem('id');
-  }
+    this.usersSubscription$ = this.$users.subscribe(users => {
+      localStorage.setItem('users', JSON.stringify(users));
+    });
 
-  public addUser(user: IUser[]): void {
-    this.$users.next(user);
   }
 
   public currentUser(): Observable<IUser> {
@@ -65,6 +66,7 @@ export class AuthorizationService {
       this.currentUserName = isUserExists.login;
       this.userId = isUserExists.id;
       this.$authStatus.next(true);
+      this.usersSubscription$.unsubscribe();
       this.router.navigate(['/home']);
     } else {
       alert('неверный логин или пароль');
@@ -89,15 +91,9 @@ export class AuthorizationService {
     return Date.now() + Math.random().toString(36).substr(2, 9);
   }
 
-  public updateUserList(userId: string, Login: string, Password: string): void {
-    this.newUser = {
-      id: userId,
-      login: Login,
-      password: Password,
-    };
-    this.$users.value.push(this.newUser);
-    this.addUser(this.$users.value);
-    localStorage.setItem('users', JSON.stringify(this.$users.value));
+  public updateUserList(id: string, login: string, password: string): void {
+    const users = [...this.$users.value, {id, login, password}];
+    this.$users.next(users);
   }
 
   public unAuth(): void {
@@ -107,6 +103,10 @@ export class AuthorizationService {
     localStorage.setItem('authStatus', 'unAuthed');
     this.$authStatus.next(false);
     this.messagesService.$editStatus.next(false);
+    this.usersSubscription$ = this.$users.subscribe(users => {
+      localStorage.setItem('users', JSON.stringify(users));
+    });
+    this.messagesService.messagesSubscription$.unsubscribe();
     this.router.navigate(['/login']);
   }
 }

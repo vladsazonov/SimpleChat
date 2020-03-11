@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {BehaviorSubject, Observable} from 'rxjs';
+import {BehaviorSubject, Observable, Subscription} from 'rxjs';
 import {IMessage} from '../models/message';
 
 @Injectable({
@@ -9,12 +9,16 @@ import {IMessage} from '../models/message';
 export class MessagesService {
 
   public messIndex: number;
-  public newMessage: IMessage;
   public $messages = new BehaviorSubject<IMessage[]>([]);
   public $editStatus = new BehaviorSubject<boolean>(false);
+  public messagesSubscription$: Subscription;
 
   constructor() {
     this.$messages.next(JSON.parse(localStorage.getItem('messArr')) || []);
+    this.messagesSubscription$ = this.$messages.subscribe(users => {
+      localStorage.setItem('messArr', JSON.stringify(users));
+    });
+
   }
 
  public getEditStatus(): Observable<boolean> {
@@ -25,17 +29,9 @@ export class MessagesService {
     return this.$messages.asObservable();
   }
 
-  public sendMessage(id: string, Message: string, Date: string, currentUserId: string, SenderName: string): void {
-    this.newMessage = {
-      messId: id,
-      message: Message,
-      date: Date,
-      userId: currentUserId,
-      senderName: SenderName,
-    };
-    this.$messages.value.push(this.newMessage);
-    this.$messages.next(this.$messages.value);
-    localStorage.setItem('messArr', JSON.stringify(this.$messages.value));
+  public sendMessage(messId: string, message: string, date: string, userId: string, senderName: string): void {
+    const messages = [...this.$messages.value, {messId, message, date, userId, senderName}];
+    this.$messages.next(messages);
   }
 
   public deleteMessage(messId: string): void {
@@ -44,10 +40,10 @@ export class MessagesService {
     const deletedMessageIndex = this.$messages.value.findIndex(
       elem => elem.messId === deletedMessage.messId && elem.userId === currentUserId);
     if (deletedMessageIndex > -1) {
-      this.$messages.value.splice(deletedMessageIndex, 1);
-      this.$messages.next(this.$messages.value);
+      const messages = this.$messages.value;
+      messages.splice(deletedMessageIndex, 1);
+      this.$messages.next(messages);
     }
-    localStorage.setItem('messArr', JSON.stringify(this.$messages.value));
   }
 
   public editMessage(messId: string): void {
@@ -61,8 +57,9 @@ export class MessagesService {
   }
 
   public sendEditedMess(newMessage: string): void {
-    this.$messages.value[this.messIndex].message = newMessage;
-    localStorage.setItem('messArr', JSON.stringify(this.$messages.value));
+    const messages = this.$messages.value;
+    messages[this.messIndex].message = newMessage;
+    this.$messages.next(messages);
     this.messIndex = null;
     this.$editStatus.next(false);
   }
