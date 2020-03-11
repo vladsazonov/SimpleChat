@@ -95,6 +95,7 @@ export class AuthorizationService {
       login: Login,
       password: Password,
     };
+
     this.$users.value.push(this.newUser);
     this.addUser(this.$users.value);
     localStorage.setItem('users', JSON.stringify(this.$users.value));
