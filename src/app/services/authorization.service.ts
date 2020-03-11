@@ -29,9 +29,9 @@ export class AuthorizationService {
     if (localStorage.getItem('authStatus') === 'authed') {
       this.$authStatus.next(true);
     }
-    this.$users.next(JSON.parse(localStorage.getItem('users')) || []);
     this.currentUserName = localStorage.getItem('login');
     this.userId = localStorage.getItem('id');
+    this.$users.next(JSON.parse(localStorage.getItem('users')) || []);
     this.usersSubscription$ = this.$users.subscribe(users => {
       localStorage.setItem('users', JSON.stringify(users));
     });

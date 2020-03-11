@@ -15,13 +15,12 @@ export class MessagesService {
 
   constructor() {
     this.$messages.next(JSON.parse(localStorage.getItem('messArr')) || []);
-    this.messagesSubscription$ = this.$messages.subscribe(users => {
-      localStorage.setItem('messArr', JSON.stringify(users));
+    this.messagesSubscription$ = this.$messages.subscribe(messages => {
+      localStorage.setItem('messArr', JSON.stringify(messages));
     });
-
   }
 
- public getEditStatus(): Observable<boolean> {
+  public getEditStatus(): Observable<boolean> {
     return this.$editStatus.asObservable();
   }
 
