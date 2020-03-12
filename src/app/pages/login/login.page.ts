@@ -13,7 +13,7 @@ export class LoginPage {
 
   constructor(
     private router: Router,
-    private authorizationService: AuthorizationService
+    public authorizationService: AuthorizationService
   ) {
   }
 
