@@ -12,7 +12,7 @@ import {FormGroup, FormControl} from '@angular/forms';
 export class RegistrationPage {
 
   constructor(
-    private authorizationService: AuthorizationService
+    public authorizationService: AuthorizationService
   ) { }
 
   public registerForm = new FormGroup({
