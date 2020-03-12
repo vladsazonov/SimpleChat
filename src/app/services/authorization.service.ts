@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Router} from '@angular/router';
-import {BehaviorSubject, Observable, Subscription} from 'rxjs';
+import {BehaviorSubject, Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {MessagesService} from './messages.service';
 import {IUser} from '../models/user';
@@ -15,8 +15,6 @@ export class AuthorizationService {
   public $users = new BehaviorSubject<IUser[]>([]);
   public currentUserName: string;
   public userId: string;
-  public usersSubscription$: Subscription;
-
 
   constructor(
     private router: Router,
@@ -32,11 +30,8 @@ export class AuthorizationService {
     this.currentUserName = localStorage.getItem('login');
     this.userId = localStorage.getItem('id');
     this.$users.next(JSON.parse(localStorage.getItem('users')) || []);
-    this.usersSubscription$ = this.$users.subscribe(users => {
+    this.$users.subscribe(users => {
       localStorage.setItem('users', JSON.stringify(users));
-    });
-    this.messagesService.messagesSubscription$ = this.messagesService.$messages.subscribe(messages => {
-      localStorage.setItem('messArr', JSON.stringify(messages));
     });
   }
 
@@ -68,7 +63,6 @@ export class AuthorizationService {
       this.currentUserName = isUserExists.login;
       this.userId = isUserExists.id;
       this.$authStatus.next(true);
-      this.usersSubscription$.unsubscribe();
       this.router.navigate(['/home']);
     } else {
       alert('неверный логин или пароль');
@@ -105,10 +99,6 @@ export class AuthorizationService {
     localStorage.setItem('authStatus', 'unAuthed');
     this.$authStatus.next(false);
     this.messagesService.$editStatus.next(false);
-    this.usersSubscription$ = this.$users.subscribe(users => {
-      localStorage.setItem('users', JSON.stringify(users));
-    });
-    this.messagesService.messagesSubscription$.unsubscribe();
     this.router.navigate(['/login']);
   }
 }
