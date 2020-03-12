@@ -13,7 +13,7 @@ export class ChatNavBarComponent {
   @Input() public avatarSymbol: string;
 
   constructor(
-    private authorizationService: AuthorizationService
+    public authorizationService: AuthorizationService
   ) {
   }
 }
