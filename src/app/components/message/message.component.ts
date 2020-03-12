@@ -31,7 +31,7 @@ export class MessageComponent implements AfterViewInit, OnInit {
   public currentUserId: string;
 
   constructor(
-    private messagesService: MessagesService,
+    public messagesService: MessagesService,
     private authorizationService: AuthorizationService
   ) {
   }
