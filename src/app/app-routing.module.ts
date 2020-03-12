@@ -1,9 +1,9 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {Routes, RouterModule} from '@angular/router';
-import {HomeComponent} from './home/home.component';
-import {LoginPageComponent} from './login-page/login-page.component';
-import {RegistrationPageComponent} from './registration-page/registration-page.component';
+import {HomePage} from './pages/home/home.page';
+import {LoginPage} from './pages/login/login.page';
+import {RegistrationPage} from './pages/registration/registration.page';
 import {AuthGuard} from './guards/auth.guard';
 import {LoginGuard} from './guards/login.guard';
 
@@ -15,17 +15,17 @@ const routes: Routes = [
   },
   {
     path: 'home',
-    component: HomeComponent,
+    component: HomePage,
     canActivate: [AuthGuard]
   },
   {
     path: 'login',
-    component: LoginPageComponent,
+    component: LoginPage,
     canActivate: [LoginGuard]
   },
   {
     path: 'registration',
-    component: RegistrationPageComponent,
+    component: RegistrationPage,
     canActivate: [LoginGuard]
   },
   {

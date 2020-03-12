@@ -1,14 +1,15 @@
-import {Component} from '@angular/core';
-import {AuthorizationService} from '../services/authorization.service';
+import {ChangeDetectionStrategy, Component} from '@angular/core';
+import {AuthorizationService} from '../../services/authorization.service';
 import {Router} from '@angular/router';
 import {FormGroup, FormControl} from '@angular/forms';
 
 @Component({
   selector: 'app-login-page',
-  templateUrl: './login-page.component.html',
-  styleUrls: ['./login-page.component.css']
+  templateUrl: './login.page.html',
+  styleUrls: ['./login.page.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class LoginPageComponent {
+export class LoginPage {
 
   constructor(
     private router: Router,

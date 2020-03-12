@@ -1,14 +1,15 @@
-import {Component} from '@angular/core';
-import {AuthorizationService} from '../services/authorization.service';
+import {ChangeDetectionStrategy, Component} from '@angular/core';
+import {AuthorizationService} from '../../services/authorization.service';
 import {FormGroup, FormControl} from '@angular/forms';
 
 @Component({
   selector: 'app-registration-page',
-  templateUrl: './registration-page.component.html',
-  styleUrls: ['./registration-page.component.css']
+  templateUrl: './registration.page.html',
+  styleUrls: ['./registration.page.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 
-export class RegistrationPageComponent {
+export class RegistrationPage {
 
   constructor(
     private authorizationService: AuthorizationService

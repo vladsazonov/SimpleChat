@@ -9,15 +9,17 @@ import {IMessage} from '../models/message';
 export class MessagesService {
 
   public messIndex: number;
-  public newMessage: IMessage;
   public $messages = new BehaviorSubject<IMessage[]>([]);
   public $editStatus = new BehaviorSubject<boolean>(false);
 
   constructor() {
     this.$messages.next(JSON.parse(localStorage.getItem('messArr')) || []);
+    this.$messages.subscribe(messages => {
+      localStorage.setItem('messArr', JSON.stringify(messages));
+    });
   }
 
- public getEditStatus(): Observable<boolean> {
+  public getEditStatus(): Observable<boolean> {
     return this.$editStatus.asObservable();
   }
 
@@ -25,35 +27,19 @@ export class MessagesService {
     return this.$messages.asObservable();
   }
 
-  public sendMessage(id: string, Message: string, Date: string, currentUserId: string, SenderName: string): void {
-    this.newMessage = {
-      messId: id,
-      message: Message,
-      date: Date,
-      userId: currentUserId,
-      senderName: SenderName,
-    };
-    this.$messages.value.push(this.newMessage);
-    this.$messages.next(this.$messages.value);
-    localStorage.setItem('messArr', JSON.stringify(this.$messages.value));
+  public sendMessage(messId: string, message: string, date: string, userId: string, senderName: string): void {
+    const messages = [...this.$messages.value, {messId, message, date, userId, senderName}];
+    this.$messages.next(messages);
   }
 
   public deleteMessage(messId: string): void {
-    const deletedMessage = this.$messages.value.find(id => messId === id.messId);
-    const currentUserId = localStorage.getItem('id');
-    const deletedMessageIndex = this.$messages.value.findIndex(
-      elem => elem.messId === deletedMessage.messId && elem.userId === currentUserId);
-    if (deletedMessageIndex > -1) {
-      this.$messages.value.splice(deletedMessageIndex, 1);
-      this.$messages.next(this.$messages.value);
-    }
-    localStorage.setItem('messArr', JSON.stringify(this.$messages.value));
+    const messages = this.$messages.value.filter(message => message.messId !== messId);
+    this.$messages.next(messages);
   }
 
   public editMessage(messId: string): void {
-    const findedMessage = this.$messages.value.find(id => messId === id.messId);
-    this.messIndex = this.$messages.value.findIndex(elem => elem.messId === findedMessage.messId);
-    if (this.messIndex > -1 && messId === findedMessage.messId) {
+    this.messIndex = this.$messages.value.findIndex(elem => elem.messId === messId);
+    if (this.messIndex > -1) {
       this.$editStatus.next(true);
     } else {
       this.$editStatus.next(false);
@@ -61,9 +47,9 @@ export class MessagesService {
   }
 
   public sendEditedMess(newMessage: string): void {
-    this.$messages.value[this.messIndex].message = newMessage;
-    localStorage.setItem('messArr', JSON.stringify(this.$messages.value));
-    this.messIndex = null;
+    const messages = this.$messages.value;
+    messages[this.messIndex].message = newMessage;
+    this.$messages.next(messages);
     this.$editStatus.next(false);
   }
 }

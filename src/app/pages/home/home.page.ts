@@ -1,15 +1,15 @@
 import {Component, OnInit} from '@angular/core';
-import {AuthorizationService} from '../services/authorization.service';
+import {AuthorizationService} from '../../services/authorization.service';
 import {Observable} from 'rxjs';
-import {IUser} from '../models/user';
+import {IUser} from '../../models/user';
 
 @Component({
   selector: 'app-home',
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css']
+  templateUrl: './home.page.html',
+  styleUrls: ['./home.page.css']
 })
 
-export class HomeComponent implements OnInit {
+export class HomePage implements OnInit {
 
   public user$: Observable<IUser>;
 

@@ -15,7 +15,6 @@ export class AuthorizationService {
   public $users = new BehaviorSubject<IUser[]>([]);
   public currentUserName: string;
   public userId: string;
-  public newUser: IUser;
 
   constructor(
     private router: Router,
@@ -28,13 +27,12 @@ export class AuthorizationService {
     if (localStorage.getItem('authStatus') === 'authed') {
       this.$authStatus.next(true);
     }
-    this.$users.next(JSON.parse(localStorage.getItem('users')) || []);
     this.currentUserName = localStorage.getItem('login');
     this.userId = localStorage.getItem('id');
-  }
-
-  public addUser(user: IUser[]): void {
-    this.$users.next(user);
+    this.$users.next(JSON.parse(localStorage.getItem('users')) || []);
+    this.$users.subscribe(users => {
+      localStorage.setItem('users', JSON.stringify(users));
+    });
   }
 
   public currentUser(): Observable<IUser> {
@@ -89,16 +87,9 @@ export class AuthorizationService {
     return Date.now() + Math.random().toString(36).substr(2, 9);
   }
 
-  public updateUserList(userId: string, Login: string, Password: string): void {
-    this.newUser = {
-      id: userId,
-      login: Login,
-      password: Password,
-    };
-
-    this.$users.value.push(this.newUser);
-    this.addUser(this.$users.value);
-    localStorage.setItem('users', JSON.stringify(this.$users.value));
+  public updateUserList(id: string, login: string, password: string): void {
+    const users = [...this.$users.value, {id, login, password}];
+    this.$users.next(users);
   }
 
   public unAuth(): void {
